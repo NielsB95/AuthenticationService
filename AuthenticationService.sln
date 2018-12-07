@@ -1,11 +1,14 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationService", "AuthenticationService\AuthenticationService.csproj", "{C7A4F00B-E7E5-4036-AD8A-ECD8CC4E6329}"
+VisualStudioVersion = 15.0.28010.2046
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationService", "AuthenticationService\AuthenticationService.csproj", "{C7A4F00B-E7E5-4036-AD8A-ECD8CC4E6329}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationService.DataLayer", "AuthenticationService.DataLayer\AuthenticationService.DataLayer.csproj", "{81BE49A2-3422-497A-AD88-285ECF56DC66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationService.DataLayer", "AuthenticationService.DataLayer\AuthenticationService.DataLayer.csproj", "{81BE49A2-3422-497A-AD88-285ECF56DC66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationService.BusinessLayer", "AuthenticationService.BusinessLayer\AuthenticationService.BusinessLayer.csproj", "{8796A874-39B5-43BA-B8D0-7F92C958DA21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationService.BusinessLayer", "AuthenticationService.BusinessLayer\AuthenticationService.BusinessLayer.csproj", "{8796A874-39B5-43BA-B8D0-7F92C958DA21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationService.BusinessLayer.Tests", "AuthenticationService.BusinessLayer.Tests\AuthenticationService.BusinessLayer.Tests.csproj", "{63BA7DDF-92E8-4868-A54E-7503735D423B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,5 +28,15 @@ Global
 		{8796A874-39B5-43BA-B8D0-7F92C958DA21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8796A874-39B5-43BA-B8D0-7F92C958DA21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8796A874-39B5-43BA-B8D0-7F92C958DA21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63BA7DDF-92E8-4868-A54E-7503735D423B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63BA7DDF-92E8-4868-A54E-7503735D423B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63BA7DDF-92E8-4868-A54E-7503735D423B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63BA7DDF-92E8-4868-A54E-7503735D423B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C9B24C4E-2139-4F98-954B-F45DDB52C3CD}
 	EndGlobalSection
 EndGlobal
