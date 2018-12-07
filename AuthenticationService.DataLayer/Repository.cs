@@ -3,7 +3,7 @@ using AuthenticationService.BusinessLayer.Entities;
 
 namespace AuthenticationService.DataLayer
 {
-    public class Repository<T> : IRepository<T> where T : Entity
+    public abstract class Repository<T> : IRepository<T> where T : Entity
     {
         public T Add(T entity)
         {
