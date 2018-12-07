@@ -3,6 +3,7 @@ using AuthenticationService.BusinessLayer.Entities.Roles;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Security;
 
 namespace AuthenticationService.BusinessLayer.Entities.Users
@@ -11,12 +12,17 @@ namespace AuthenticationService.BusinessLayer.Entities.Users
 	{
 		public Guid ID { get; set; }
 
+		[Required]
 		public string Firstname { get; set; }
+
+		[Required]
 		public string Lastname { get; set; }
 
+		[Required]
 		public string Username { get; set; }
 
 		[JsonIgnore]
+		[Required]
 		public SecureString Password { get; set; }
 
 		/// <summary>

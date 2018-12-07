@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace AuthenticationService.BusinessLayer.Entities.Applications
 {
 	/// <summary>
@@ -7,6 +9,8 @@ namespace AuthenticationService.BusinessLayer.Entities.Applications
 	public class Application : Entity
 	{
 		public Guid ID { get; private set; }
+
+		[Required]
 		public string Name { get; private set; }
 	}
 }
