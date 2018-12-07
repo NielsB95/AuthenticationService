@@ -5,9 +5,9 @@ namespace AuthenticationService.BusinessLayer.Entities.Permissions
 {
 	public class Permission : Entity
 	{
-		public Guid ID { get; private set; }
+		public Guid ID { get; set; }
 
 		[Required]
-		public string Name { get; private set; }
+		public string Name { get; set; }
 	}
 }

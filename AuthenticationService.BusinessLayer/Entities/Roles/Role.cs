@@ -7,10 +7,10 @@ namespace AuthenticationService.BusinessLayer.Entities.Roles
 {
 	public class Role : Entity
 	{
-		public Guid ID { get; private set; }
+		public Guid ID { get; set; }
 
 		[Required]
-		public string Name { get; private set; }
-		public IList<Permission> Permissions { get; private set; }
+		public string Name { get; set; }
+		public IList<Permission> Permissions { get; set; }
 	}
 }

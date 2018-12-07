@@ -8,9 +8,9 @@ namespace AuthenticationService.BusinessLayer.Entities.Applications
 	/// </summary>
 	public class Application : Entity
 	{
-		public Guid ID { get; private set; }
+		public Guid ID { get; set; }
 
 		[Required]
-		public string Name { get; private set; }
+		public string Name { get; set; }
 	}
 }
