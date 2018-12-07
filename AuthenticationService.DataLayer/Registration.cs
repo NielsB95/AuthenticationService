@@ -17,7 +17,7 @@ namespace AuthenticationService.DataLayer
 
         private static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            // Get all the repositories
+            // Get all the repository types.
             var repositories = Assembly
                         .GetCallingAssembly()
                         .GetTypes()
