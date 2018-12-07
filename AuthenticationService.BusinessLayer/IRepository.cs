@@ -1,7 +1,7 @@
 ﻿using AuthenticationService.BusinessLayer.Entities;
 using System.Collections.Generic;
 
-namespace AuthenticationService.DataLayer
+namespace AuthenticationService.BusinessLayer
 {
 	public interface IRepository
 	{

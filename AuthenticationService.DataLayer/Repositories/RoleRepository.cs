@@ -1,8 +1,8 @@
-﻿using AuthenticationService.BusinessLayer.Entities;
+﻿using AuthenticationService.BusinessLayer.Entities.Roles;
 
 namespace AuthenticationService.DataLayer.Repositories
 {
-    public class RoleRepository : Repository<Role>
-    {
-    }
+	public class RoleRepository : Repository<Role>, IRoleRepository
+	{
+	}
 }
