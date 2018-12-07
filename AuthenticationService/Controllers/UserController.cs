@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace AuthenticationService.Controllers
 {
+	[Route("Users")]
 	public class UserController : ControllerBase
 	{
 		private IUserRepository userRepository;
