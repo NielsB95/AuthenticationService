@@ -4,7 +4,7 @@ using System.Security;
 
 namespace AuthenticationService.BusinessLayer.Entities
 {
-    public class User
+    public class User : Entity
     {
         public Guid ID { get; internal set; }
 

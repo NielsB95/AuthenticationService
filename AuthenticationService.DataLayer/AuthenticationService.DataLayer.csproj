@@ -1,7 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
-  </PropertyGroup>
-
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\AuthenticationService.BusinessLayer\AuthenticationService.BusinessLayer.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Repositories\" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1" />
+    </ItemGroup>
 </Project>
