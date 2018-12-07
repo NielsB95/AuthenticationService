@@ -4,9 +4,7 @@ using System.Collections.Generic;
 namespace AuthenticationService.BusinessLayer
 {
 	public interface IRepository
-	{
-
-	}
+	{ }
 
 	public interface IRepository<T> : IRepository where T : Entity
 	{
