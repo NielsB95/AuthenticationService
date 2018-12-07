@@ -5,9 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\" />
+      <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.6" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Remove="Class1.cs" />
+    <Folder Include="Entities\" />
   </ItemGroup>
 </Project>
