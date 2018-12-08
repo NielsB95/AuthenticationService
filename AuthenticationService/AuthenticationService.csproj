@@ -7,9 +7,9 @@
         <Folder Include="wwwroot\" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.6" />
+        <ProjectReference Include="..\AuthenticationService.DataLayer\AuthenticationService.DataLayer.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\AuthenticationService.DataLayer\AuthenticationService.DataLayer.csproj" />
+      <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.6" />
     </ItemGroup>
 </Project>
