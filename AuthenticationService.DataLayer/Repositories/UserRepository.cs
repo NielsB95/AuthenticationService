@@ -1,19 +1,13 @@
 ﻿using System.Collections.Generic;
 using AuthenticationService.BusinessLayer.Entities.Users;
+using AuthenticationService.DataLayer.Context;
 
 namespace AuthenticationService.DataLayer.Repositories
 {
     public class UserRepository : Repository<User>, IUserRepository
     {
-        public override IList<User> GetAll()
+        public UserRepository(AuthenticationServiceContext context) : base(context)
         {
-            return new List<User>()
-            {
-                new User(){
-                    Firstname = "John",
-                    Lastname = "Doe"
-                }
-            };
         }
     }
 }
