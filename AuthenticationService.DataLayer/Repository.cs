@@ -12,7 +12,7 @@ namespace AuthenticationService.DataLayer
     {
         private AuthenticationServiceContext context;
 
-        public Repository(AuthenticationServiceContext context)
+        protected Repository(AuthenticationServiceContext context)
         {
             this.context = context;
         }

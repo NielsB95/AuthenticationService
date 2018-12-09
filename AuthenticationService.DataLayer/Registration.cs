@@ -23,7 +23,7 @@ namespace AuthenticationService.DataLayer
         {
             // Add the database context as a singleton.
             services.AddDbContext<AuthenticationServiceContext>(options =>
-                options.UseNpgsql("Server=localhost;Database=AuthenticationDB;Username=postgres;Password=PregreSQL"));
+                options.UseNpgsql("Server=localhost;Database=AuthenticationDB;Username=postgres;Password=PregreSQL"), ServiceLifetime.Scoped);
 
             return services;
         }
@@ -51,7 +51,7 @@ namespace AuthenticationService.DataLayer
                 var repoInterface = repoInterfaces.Single();
 
                 // Register the repository and its interface to the service.
-                services.AddSingleton(repoInterface, repository);
+                services.AddScoped(repoInterface, repository);
             }
 
             return services;

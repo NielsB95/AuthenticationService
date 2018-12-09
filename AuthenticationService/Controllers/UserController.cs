@@ -1,23 +1,24 @@
 ﻿using AuthenticationService.BusinessLayer.Entities.Users;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AuthenticationService.Controllers
 {
-	[Route("Users")]
-	public class UserController : ControllerBase
-	{
-		private IUserRepository userRepository;
+    [Route("Users")]
+    public class UserController : ControllerBase
+    {
+        private IUserRepository userRepository;
 
-		public UserController(IUserRepository userRepository)
-		{
-			this.userRepository = userRepository;
-		}
+        public UserController(IUserRepository userRepository)
+        {
+            this.userRepository = userRepository;
+        }
 
-		[HttpGet]
-		public ActionResult<IList<User>> GetUsers()
-		{
-			return Ok(userRepository.GetAll());
-		}
-	}
+        [HttpGet]
+        public async Task<ActionResult<IList<User>>> GetUsers()
+        {
+            return Ok(await userRepository.GetAll());
+        }
+    }
 }
