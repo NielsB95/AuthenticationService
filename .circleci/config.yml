@@ -4,8 +4,9 @@ jobs:
     docker:
       - image: microsoft/dotnet:2.1.500-sdk-stretch
     steps:
-      - checkout:
-        path: ~/Backend
+      - checkout
+      - run: cd Backend/
+      - run: find .
       - run: dotnet restore
       - run: dotnet build
       - run: dotnet test
