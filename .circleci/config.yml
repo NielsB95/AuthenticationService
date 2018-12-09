@@ -5,8 +5,7 @@ jobs:
       - image: microsoft/dotnet:2.1.500-sdk-stretch
     steps:
       - checkout
-      - run: cd Backend/
       - run: find .
-      - run: dotnet restore
-      - run: dotnet build
-      - run: dotnet test
+      - run: cd Backend && dotnet restore
+      - run: cd Backend && dotnet build
+      - run: cd Backend && dotnet test
