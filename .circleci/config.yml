@@ -13,6 +13,13 @@ jobs:
     steps:
       - checkout
       - run: cd Backend && dotnet test
+  frontend_build:
+    docker:
+      - image: circleci/node:8.9.1
+    steps:
+      - checkout
+      - run: cd Frontend && npm run build
+
 workflows:
   version: 2
   build:
@@ -21,3 +28,4 @@ workflows:
       - backend_test:
           requires:
             - backend_build
+      - frontend_build
