@@ -10,7 +10,8 @@ namespace AuthenticationService.DataLayer
 {
     public abstract class Repository<T> : IRepository<T> where T : Entity
     {
-        private AuthenticationServiceContext context;
+        protected AuthenticationServiceContext context;
+        protected object lockObject = new object();
 
         protected Repository(AuthenticationServiceContext context)
         {

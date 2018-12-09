@@ -6,11 +6,24 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 using System.Reflection;
+using Microsoft.Extensions;
+using System.IO;
 
 namespace AuthenticationService.DataLayer
 {
     public static class Registration
     {
+        private static IConfigurationRoot configuration;
+
+        static Registration()
+        {
+            configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .Build();
+        }
+
+
         public static IServiceCollection AddDataLayer(this IServiceCollection services)
         {
             services.AddDatabaseContext();
@@ -23,7 +36,7 @@ namespace AuthenticationService.DataLayer
         {
             // Add the database context as a singleton.
             services.AddDbContext<AuthenticationServiceContext>(options =>
-                options.UseNpgsql("Server=localhost;Database=AuthenticationDB;Username=postgres;Password=PregreSQL"), ServiceLifetime.Scoped);
+                options.UseNpgsql(configuration.GetConnectionString("ConnectionString")), ServiceLifetime.Scoped);
 
             return services;
         }
@@ -56,6 +69,5 @@ namespace AuthenticationService.DataLayer
 
             return services;
         }
-
     }
 }

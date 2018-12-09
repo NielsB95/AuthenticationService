@@ -52,6 +52,14 @@ namespace AuthenticationService.DataLayer.Tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public async Task AddNullTest()
+        {
+            var repo = new RoleRepository(context);
+            await repo.Add(null);
+        }
+
+        [TestMethod]
         public async Task UpdateTest()
         {
             var repo = new RoleRepository(context);
