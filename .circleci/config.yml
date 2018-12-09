@@ -1,12 +1,13 @@
 version: 1
 jobs:
   build:
-    working_directory: Backend/
     docker:
       - image: microsoft/dotnet:2.1.500-sdk-stretch
     steps:
       - checkout
+      - run: cd ./Backend/
       - run: pwd
+      - run: ls -al
       - run: find .
       - run: dotnet restore
       - run: dotnet build
