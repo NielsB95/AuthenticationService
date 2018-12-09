@@ -18,6 +18,7 @@ jobs:
       - image: circleci/node:8.9.1
     steps:
       - checkout
+      - run: cd Frontend && npm i
       - run: cd Frontend && npm run build
 
 workflows:
