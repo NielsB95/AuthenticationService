@@ -21,6 +21,13 @@ jobs:
       - run: cd Frontend && npm i
       - run: cd Frontend && npm run build
       - run: cd Frontend && npm run test
+  frontend_test:
+    docker:
+      - image: circleci/node:8.9.1
+    steps:
+      - checkout
+      - run: cd Frontend && npm i
+      - run: cd Frontend && npm run test
 
 workflows:
   version: 2
@@ -31,3 +38,6 @@ workflows:
           requires:
             - backend_build
       - frontend_build
+      - frontend_test:
+          requires:
+            - frontend_build
