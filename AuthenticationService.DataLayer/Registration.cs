@@ -1,5 +1,7 @@
 ﻿using AuthenticationService.BusinessLayer;
 using AuthenticationService.DataLayer.Context;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
@@ -11,6 +13,7 @@ namespace AuthenticationService.DataLayer
     {
         public static IServiceCollection AddDataLayer(this IServiceCollection services)
         {
+            services.AddDatabaseContext();
             services.AddRepositories();
 
             return services;
@@ -19,7 +22,8 @@ namespace AuthenticationService.DataLayer
         private static IServiceCollection AddDatabaseContext(this IServiceCollection services)
         {
             // Add the database context as a singleton.
-            services.AddDbContext<AuthenticationServiceContext>(ServiceLifetime.Singleton);
+            services.AddDbContext<AuthenticationServiceContext>(options =>
+                options.UseNpgsql("Server=localhost;Database=AuthenticationDB;Username=postgres;Password=PregreSQL"));
 
             return services;
         }

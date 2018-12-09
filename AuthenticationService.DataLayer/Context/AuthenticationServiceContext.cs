@@ -5,17 +5,23 @@ using AuthenticationService.BusinessLayer.Entities.Roles;
 using AuthenticationService.BusinessLayer.Entities.Users;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace AuthenticationService.DataLayer.Context
 {
     public class AuthenticationServiceContext : DbContext
     {
-        protected AuthenticationServiceContext()
+        public AuthenticationServiceContext()
         {
         }
 
-        public AuthenticationServiceContext(DbContextOptions options) : base(options)
+        public AuthenticationServiceContext(DbContextOptions<AuthenticationServiceContext> options) : base(options)
         {
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
         }
 
         public DbSet<User> Users { get; set; }

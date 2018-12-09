@@ -331,3 +331,6 @@ ASALocalRun/
 
 # MacOS files
 *.DS_Store
+
+# Ingore setting files
+appsettings.json
