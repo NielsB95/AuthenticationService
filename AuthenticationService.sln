@@ -4,11 +4,13 @@ VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationService", "AuthenticationService\AuthenticationService.csproj", "{C7A4F00B-E7E5-4036-AD8A-ECD8CC4E6329}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationService.DataLayer", "AuthenticationService.DataLayer\AuthenticationService.DataLayer.csproj", "{81BE49A2-3422-497A-AD88-285ECF56DC66}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationService.DataLayer", "AuthenticationService.DataLayer\AuthenticationService.DataLayer.csproj", "{81BE49A2-3422-497A-AD88-285ECF56DC66}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationService.BusinessLayer", "AuthenticationService.BusinessLayer\AuthenticationService.BusinessLayer.csproj", "{8796A874-39B5-43BA-B8D0-7F92C958DA21}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationService.BusinessLayer.Tests", "AuthenticationService.BusinessLayer.Tests\AuthenticationService.BusinessLayer.Tests.csproj", "{63BA7DDF-92E8-4868-A54E-7503735D423B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationService.DataLayer.Tests", "AuthenticationService.DataLayer.Tests\AuthenticationService.DataLayer.Tests.csproj", "{9AD08A79-514E-4117-A3B1-B0F4A2AF2246}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{63BA7DDF-92E8-4868-A54E-7503735D423B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63BA7DDF-92E8-4868-A54E-7503735D423B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63BA7DDF-92E8-4868-A54E-7503735D423B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AD08A79-514E-4117-A3B1-B0F4A2AF2246}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AD08A79-514E-4117-A3B1-B0F4A2AF2246}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AD08A79-514E-4117-A3B1-B0F4A2AF2246}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AD08A79-514E-4117-A3B1-B0F4A2AF2246}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

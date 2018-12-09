@@ -30,7 +30,11 @@ namespace AuthenticationService.DataLayer
 
         public async virtual Task<bool> Delete(T entity)
         {
-            return await new Task<bool>(() => { return true; });
+            context.Remove(entity);
+            var changes = await context.SaveChangesAsync();
+
+            // Only one item should have been affected.
+            return changes == 1;
         }
 
         public async virtual Task<IList<T>> GetAll()
@@ -44,7 +48,6 @@ namespace AuthenticationService.DataLayer
         public async virtual Task<T> Update(T entity)
         {
             context.Update(entity);
-
             await context.SaveChangesAsync();
 
             return entity;

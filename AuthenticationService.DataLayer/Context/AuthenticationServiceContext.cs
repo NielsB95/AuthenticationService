@@ -21,7 +21,10 @@ namespace AuthenticationService.DataLayer.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            base.OnConfiguring(optionsBuilder);
+            // Only configure if it hasn't been configured yet. We are probably
+            // running unit tests if it hasn't been configured.
+            if (!optionsBuilder.IsConfigured)
+                base.OnConfiguring(optionsBuilder);
         }
 
         public DbSet<User> Users { get; set; }
