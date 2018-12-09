@@ -18,4 +18,6 @@ workflows:
   build:
     jobs:
       - backend_build
-      - backend_test
+      - backend_test:
+        requires:
+          - backend_build
