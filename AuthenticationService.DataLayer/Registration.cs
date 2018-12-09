@@ -23,7 +23,11 @@ namespace AuthenticationService.DataLayer
                 .Build();
         }
 
-
+        /// <summary>
+        /// This function adds all the services we need for the DataLayer.
+        /// </summary>
+        /// <returns>The data layer.</returns>
+        /// <param name="services">Services.</param>
         public static IServiceCollection AddDataLayer(this IServiceCollection services)
         {
             services.AddDatabaseContext();
@@ -32,6 +36,11 @@ namespace AuthenticationService.DataLayer
             return services;
         }
 
+        /// <summary>
+        /// Add the database context so we can use it with Dependency Injection.
+        /// </summary>
+        /// <returns>The database context.</returns>
+        /// <param name="services">Services.</param>
         private static IServiceCollection AddDatabaseContext(this IServiceCollection services)
         {
             // Add the database context as a singleton.
@@ -41,6 +50,12 @@ namespace AuthenticationService.DataLayer
             return services;
         }
 
+        /// <summary>
+        /// Find all repositories in the assembly and register them as scoped
+        /// dependencies.
+        /// </summary>
+        /// <returns>The repositories.</returns>
+        /// <param name="services">Services.</param>
         private static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             // Get all the repository types.
