@@ -20,6 +20,6 @@
     <ProjectReference Include="..\AuthenticationService.DataLayer\AuthenticationService.DataLayer.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove=".DS_Store" />
+    <Folder Include="Util\" />
   </ItemGroup>
 </Project>
