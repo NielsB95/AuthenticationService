@@ -37,6 +37,3 @@ workflows:
           requires:
             - backend_build
       - frontend_build
-      - frontend_test:
-          requires:
-            - frontend_build
