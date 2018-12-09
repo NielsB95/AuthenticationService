@@ -1,13 +1,12 @@
-﻿using AuthenticationService.BusinessLayer;
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using AuthenticationService.BusinessLayer;
 using AuthenticationService.DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Linq;
-using System.Reflection;
-using Microsoft.Extensions;
-using System.IO;
 
 namespace AuthenticationService.DataLayer
 {
