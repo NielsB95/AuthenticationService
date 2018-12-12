@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 namespace AuthenticationService.Controllers
 {
     [Route("Users")]
+    [Produces("application/json")]
     public class UserController : ControllerBase
     {
         private IUserRepository userRepository;
