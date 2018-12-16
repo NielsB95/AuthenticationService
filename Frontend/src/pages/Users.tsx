@@ -11,7 +11,7 @@ class Users extends React.Component<{}, { users: [] }> {
     }
 
     componentDidMount() {
-        fetch('http://localhost:5000/Users')
+        fetch('http://192.168.2.29:5000/Users')
             .then(response => response.json())
             .then(users => {
                 this.setState({ users: users });

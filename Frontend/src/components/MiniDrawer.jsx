@@ -148,8 +148,8 @@ class MiniDrawer extends React.Component {
                     <Divider />
                     <List>
                         {['Users', 'Roles'].map((text, index) => (
-                            <Link to={`/${text}`}>
-                                <ListItem button key={text}>
+                            <Link to={`/${text}`} key={text}>
+                                <ListItem button >
                                     <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                                     <ListItemText primary={text} />
                                 </ListItem>
@@ -159,8 +159,8 @@ class MiniDrawer extends React.Component {
                     <Divider />
                     <List>
                         {['Logout'].map((text, index) => (
-                            <Link to={`/${text}`}>
-                                <ListItem button key={text}>
+                            <Link to={`/${text}`} key={text}>
+                                <ListItem button >
                                     <ListItemIcon><ExitToApp /></ListItemIcon>
                                     <ListItemText primary={text} />
                                 </ListItem>

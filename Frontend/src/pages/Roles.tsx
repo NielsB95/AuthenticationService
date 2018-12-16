@@ -11,7 +11,7 @@ class Roles extends React.Component<{}, { roles: [] }> {
     }
 
     componentDidMount() {
-        fetch('http://localhost:5000/Roles')
+        fetch('http://192.168.2.29:5000/Roles')
             .then(response => response.json())
             .then(roles => {
                 this.setState({ roles: roles });

@@ -12,6 +12,7 @@ class Content extends React.Component {
                 <div>
                     <Switch>
                         {/* <Route exact path="/" component={App} /> */}
+                        <Route exact path="/" component={Users} />
                         <Route path="/users" component={Users} />
                         <Route path="/roles" component={Roles} />
                         <Route component={NotFound} />
