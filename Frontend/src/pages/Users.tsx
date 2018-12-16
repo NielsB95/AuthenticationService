@@ -20,7 +20,8 @@ class Users extends React.Component<{}, { users: [] }> {
 
     render() {
         return (
-            <UserList users={this.state.users} />);
+            <UserList users={this.state.users} />
+        );
     }
 }
 export default Users;
