@@ -2,7 +2,7 @@
   "name": "authentication-service",
   "version": "3.2.2",
   "private": true,
-  "main": "src/index.tsx",
+  "main": "src/index.jsx",
   "dependencies": {
     "@material-ui/core": "latest",
     "@material-ui/icons": "latest",
