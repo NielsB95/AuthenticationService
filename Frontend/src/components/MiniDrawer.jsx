@@ -17,6 +17,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import SecurityIcon from '@material-ui/icons/Security';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 import ComputerIcon from '@material-ui/icons/Computer';
 import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
 import { Link } from 'react-router-dom';
@@ -148,6 +149,14 @@ class MiniDrawer extends React.Component {
                     </div>
                     <Divider />
                     <List>
+                        <Link to='/General'>
+                            <ListItem button >
+                                <ListItemIcon>
+                                    <DashboardIcon />
+                                </ListItemIcon>
+                                <ListItemText primary='General' />
+                            </ListItem>
+                        </Link>
                         <Link to='/Users'>
                             <ListItem button >
                                 <ListItemIcon>
