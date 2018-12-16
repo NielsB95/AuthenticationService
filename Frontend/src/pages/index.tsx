@@ -1,28 +1,29 @@
 import React from 'react'
-import UserList from '../components/userList';
-import { Button } from '@material-ui/core';
-
+import UserList from '../components/UserList';
+import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
+import Users from './Users';
+import Roles from './Roles';
+import NotFound from './NotFound'
 
 class Index extends React.Component<{}, { users: [] }> {
-    constructor(props: object) {
-        super(props);
-        this.state = {
-            users: []
-        }
-    }
-
-    componentDidMount() {
-        fetch('http://localhost:5000/Users')
-            .then(response => response.json())
-            .then(users => {
-                this.setState({ users: users });
-            });
-    }
-
     render() {
         return (
             <div>
-                <UserList users={this.state.users} />
+
+
+                <Router>
+                    <div>
+                        <Link to='/users'>Users</Link>
+                        <Link to='roles'>Roles</Link>
+                        <Switch>
+                            {/* <Route exact path="/" component={App} /> */}
+                            <Route path="/users" component={Users} />
+                            <Route path="/roles" component={Roles} />
+                            <Route component={NotFound} />
+                            {/* <Route component={Notfound} /> */}
+                        </Switch>
+                    </div>
+                </Router>
             </div>
         )
     }

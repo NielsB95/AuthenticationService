@@ -1,12 +1,12 @@
 import React from 'react'
 import MaterialTable from 'material-table'
 
-interface IUserList {
-    users: []
+interface IRoleList {
+    roles: []
 }
 
-class UserList extends React.Component<IUserList> {
-    constructor(props: IUserList) {
+class RoleList extends React.Component<IRoleList> {
+    constructor(props: IRoleList) {
         super(props);
     }
 
@@ -14,11 +14,11 @@ class UserList extends React.Component<IUserList> {
         return (
             <MaterialTable
                 columns={[
-                    { title: 'Firstname', field: 'firstname' },
-                    { title: 'Lastname', field: 'lastname', }
+                    { title: 'ID', field: 'id' },
+                    { title: 'Name', field: 'name', }
                 ]}
-                data={this.props.users}
-                title='Users'
+                data={this.props.roles}
+                title='Roles'
                 options={{
                     showEmptyDataSourceMessage: true,
                     pageSizeOptions: [5, 10]
@@ -28,4 +28,4 @@ class UserList extends React.Component<IUserList> {
     }
 }
 
-export default UserList;
+export default RoleList;

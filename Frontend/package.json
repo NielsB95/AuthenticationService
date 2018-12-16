@@ -9,9 +9,11 @@
     "@types/classnames": "latest",
     "@types/react": "*",
     "@types/react-dom": "*",
+    "@types/react-router-dom": "^4.3.1",
     "material-table": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "react-router-dom": "latest",
     "react-scripts": "latest"
   },
   "devDependencies": {
