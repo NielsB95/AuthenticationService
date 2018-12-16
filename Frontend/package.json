@@ -9,7 +9,7 @@
     "@types/classnames": "latest",
     "@types/react": "*",
     "@types/react-dom": "*",
-    "material-table": "^1.7.0",
+    "material-table": "latest",
     "react": "latest",
     "react-dom": "latest",
     "react-scripts": "latest"
