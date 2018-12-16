@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, TableHead, TableCell, TableRow, TableBody } from '@material-ui/core';
+import MaterialTable from 'material-table'
 
 interface IUserList {
     users: []
@@ -12,28 +12,17 @@ class UserList extends React.Component<IUserList> {
 
     render() {
         return (
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Firstname</TableCell>
-                        <TableCell>Lastname</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {this.props.users.map((user: {
-                        id: string,
-                        firstname: string,
-                        lastname: string
-                    }) => {
-                        return (
-                            <TableRow key={user.id}>
-                                <TableCell>{user.firstname}</TableCell>
-                                <TableCell>{user.lastname}</TableCell>
-                            </TableRow>
-                        )
-                    })}
-                </TableBody>
-            </Table>
+            <MaterialTable
+                columns={[
+                    { title: 'Firstname', field: 'firstname' },
+                    { title: 'Lastname', field: 'lastname', }
+                ]}
+                data={this.props.users}
+                title='Users'
+                options={{
+                    showEmptyDataSourceMessage: true
+                }}
+            />
         )
     }
 }

@@ -1,6 +1,4 @@
 import React from 'react'
-import { AppBar, Button, Table, TableRow, TableCell, TableBody, TableHead, Drawer } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
 import UserList from '../components/userList';
 
 

@@ -6,9 +6,10 @@
   "dependencies": {
     "@material-ui/core": "latest",
     "@material-ui/icons": "latest",
+    "@types/classnames": "latest",
     "@types/react": "*",
     "@types/react-dom": "*",
-    "@types/classnames": "latest",
+    "material-table": "^1.7.0",
     "react": "latest",
     "react-dom": "latest",
     "react-scripts": "latest"
