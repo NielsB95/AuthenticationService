@@ -1,5 +1,6 @@
 import React from 'react';
 import RoleList from '../components/RoleList';
+import Settings from '../settings';
 
 class Roles extends React.Component<{}, { roles: [] }> {
 
@@ -11,7 +12,7 @@ class Roles extends React.Component<{}, { roles: [] }> {
     }
 
     componentDidMount() {
-        fetch('http://192.168.2.29:5000/Roles')
+        fetch(`${Settings.BackendUrl}Roles`)
             .then(response => response.json())
             .then(roles => {
                 this.setState({ roles: roles });

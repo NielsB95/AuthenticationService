@@ -1,5 +1,6 @@
 import React from 'react';
 import UserList from '../components/UserList'
+import Settings from '../settings';
 
 class Users extends React.Component<{}, { users: [] }> {
 
@@ -11,7 +12,7 @@ class Users extends React.Component<{}, { users: [] }> {
     }
 
     componentDidMount() {
-        fetch('http://192.168.2.29:5000/Users')
+        fetch(`${Settings.BackendUrl}Users`)
             .then(response => response.json())
             .then(users => {
                 this.setState({ users: users });

@@ -14,7 +14,6 @@ class RoleList extends React.Component<IRoleList> {
         return (
             <MaterialTable
                 columns={[
-                    { title: 'ID', field: 'id' },
                     { title: 'Name', field: 'name', }
                 ]}
                 data={this.props.roles}

@@ -16,8 +16,8 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import SecurityIcon from '@material-ui/icons/Security';
+import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
 import { Link } from 'react-router-dom';
 import ExitToApp from '@material-ui/icons/ExitToApp'
 
@@ -147,14 +147,22 @@ class MiniDrawer extends React.Component {
                     </div>
                     <Divider />
                     <List>
-                        {['Users', 'Roles'].map((text, index) => (
-                            <Link to={`/${text}`} key={text}>
-                                <ListItem button >
-                                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                                    <ListItemText primary={text} />
-                                </ListItem>
-                            </Link>
-                        ))}
+                        <Link to='/Users'>
+                            <ListItem button >
+                                <ListItemIcon>
+                                    <AccessibilityNewIcon />
+                                </ListItemIcon>
+                                <ListItemText primary='Users' />
+                            </ListItem>
+                        </Link>
+                        <Link to='/Roles'>
+                            <ListItem button >
+                                <ListItemIcon>
+                                    <SecurityIcon />
+                                </ListItemIcon>
+                                <ListItemText primary='Roles' />
+                            </ListItem>
+                        </Link>
                     </List>
                     <Divider />
                     <List>
