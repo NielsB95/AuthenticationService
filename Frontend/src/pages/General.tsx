@@ -20,8 +20,12 @@ class General extends React.Component<{ classes: any }> {
         const { classes } = this.props;
 
         return (
-            <Grid container spacing={16} xs={12} justify="flex-start">
+            <Grid container spacing={24} xs={12} justify="flex-start">
                 <Grid item xs={6}>
+                    <Paper className={classes.paper}>
+                    </Paper>
+                </Grid>
+                <Grid item xs={3}>
                     <Paper className={classes.paper}>
                     </Paper>
                 </Grid>
