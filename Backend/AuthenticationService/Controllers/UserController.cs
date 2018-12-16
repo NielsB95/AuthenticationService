@@ -5,21 +5,21 @@ using System.Threading.Tasks;
 
 namespace AuthenticationService.Controllers
 {
-    [Route("Users")]
-    [Produces("application/json")]
-    public class UserController : ControllerBase
-    {
-        private IUserRepository userRepository;
+	[Route("Users")]
+	[Produces("application/json")]
+	public class UserController : ControllerBase
+	{
+		private IUserRepository userRepository;
 
-        public UserController(IUserRepository userRepository)
-        {
-            this.userRepository = userRepository;
-        }
+		public UserController(IUserRepository userRepository)
+		{
+			this.userRepository = userRepository;
+		}
 
-        [HttpGet]
-        public async Task<ActionResult<IList<User>>> GetUsers()
-        {
-            return Ok(await userRepository.GetAll());
-        }
-    }
+		[HttpGet]
+		public async Task<ActionResult<IList<User>>> GetUsers()
+		{
+			return Ok(await userRepository.GetAll());
+		}
+	}
 }
