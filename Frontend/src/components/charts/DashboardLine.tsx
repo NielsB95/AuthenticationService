@@ -20,7 +20,7 @@ class DashboardLine extends React.Component<IDashboardLine> {
         return (
             <ResponsiveContainer>
                 <LineChart key={this.iteration} data={this.props.data} margin={{ top: 15, right: 60, bottom: 5, left: 0 }}>
-                    <Line type="natural" dataKey="value" stroke="#8884d8" />
+                    <Line type="monotone" dataKey="value" stroke="#8884d8" />
                     <XAxis dataKey="date" />
                     <YAxis />
                     <Tooltip labelStyle={textStyling} itemStyle={textStyling} />
