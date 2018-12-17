@@ -3,7 +3,6 @@ import DashboardLine from '../charts/DashboardLine';
 import Settings from '../../settings';
 
 class NumberOfUsers extends React.Component<{}, { data: [] }> {
-
     constructor(props: object) {
         super(props);
         this.state = {
