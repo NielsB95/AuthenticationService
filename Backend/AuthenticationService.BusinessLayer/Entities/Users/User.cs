@@ -27,6 +27,9 @@ namespace AuthenticationService.BusinessLayer.Entities.Users
         [Required]
         public string Password { get; set; }
 
+        [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime CreatedAt { get; set; }
+
         /// <summary>
         /// The role this user has accross all the applications.
         /// </summary>
