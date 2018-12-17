@@ -12,7 +12,7 @@ class NumberOfUsers extends React.Component<{}, { data: [] }> {
     }
 
     componentDidMount() {
-        fetch(`${Settings.BackendUrl}Dashboard`)
+        fetch(`${Settings.BackendUrl}Dashboard/UsersFromLastDays`)
             .then(response => response.json())
             .then(data => this.setState({ data }));
     }
