@@ -17,7 +17,7 @@ class DashboardLine extends React.Component<IDashboardLine> {
 
         return (
             <ResponsiveContainer>
-                <LineChart data={this.props.data} margin={{ top: 5, right: 40, bottom: 5, left: 0 }}>
+                <LineChart data={this.props.data} margin={{ top: 15, right: 60, bottom: 5, left: 0 }}>
                     <Line type="natural" dataKey="value" stroke="#8884d8" />
                     <XAxis dataKey="date" />
                     <YAxis />
@@ -27,7 +27,5 @@ class DashboardLine extends React.Component<IDashboardLine> {
         )
     }
 }
-
-
 
 export default DashboardLine
