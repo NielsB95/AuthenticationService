@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import NumberOfUsers from '../components/Dashboard/NumberOfUsers';
 import { blue } from '@material-ui/core/colors';
+import UserActivity from '../components/Dashboard/UserActivity';
 
 const styles = (theme: any) => ({
     root: {
@@ -42,7 +43,7 @@ class Dashboard extends React.Component<{ classes: any }> {
                         <h3 style={{ margin: 0 }}>Activity</h3>
                     </Paper>
                     <Paper className={classes.paper}>
-                        <NumberOfUsers />
+                        <UserActivity />
                     </Paper>
                 </Grid>
             </Grid >
