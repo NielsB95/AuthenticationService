@@ -3,15 +3,17 @@ using System;
 using AuthenticationService.DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AuthenticationService.DataLayer.Migrations
 {
     [DbContext(typeof(AuthenticationServiceContext))]
-    partial class AuthenticationServiceContextModelSnapshot : ModelSnapshot
+    [Migration("20181217214301_Added AuthenticationLog")]
+    partial class AddedAuthenticationLog
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,23 +36,6 @@ namespace AuthenticationService.DataLayer.Migrations
                     b.HasIndex("UserID");
 
                     b.ToTable("Applications");
-                });
-
-            modelBuilder.Entity("AuthenticationService.BusinessLayer.Entities.AuthenticationLogs.AuthenticationLog", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAddOrUpdate();
-
-                    b.Property<Guid?>("UserID");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("AuthenticationLogs");
                 });
 
             modelBuilder.Entity("AuthenticationService.BusinessLayer.Entities.Permissions.Permission", b =>
@@ -116,13 +101,6 @@ namespace AuthenticationService.DataLayer.Migrations
                 {
                     b.HasOne("AuthenticationService.BusinessLayer.Entities.Users.User")
                         .WithMany("Applications")
-                        .HasForeignKey("UserID");
-                });
-
-            modelBuilder.Entity("AuthenticationService.BusinessLayer.Entities.AuthenticationLogs.AuthenticationLog", b =>
-                {
-                    b.HasOne("AuthenticationService.BusinessLayer.Entities.Users.User", "User")
-                        .WithMany()
                         .HasForeignKey("UserID");
                 });
 

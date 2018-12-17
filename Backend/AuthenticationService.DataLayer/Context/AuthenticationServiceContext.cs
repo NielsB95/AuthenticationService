@@ -1,5 +1,6 @@
 ﻿using System;
 using AuthenticationService.BusinessLayer.Entities.Applications;
+using AuthenticationService.BusinessLayer.Entities.AuthenticationLogs;
 using AuthenticationService.BusinessLayer.Entities.Permissions;
 using AuthenticationService.BusinessLayer.Entities.Roles;
 using AuthenticationService.BusinessLayer.Entities.Users;
@@ -31,5 +32,6 @@ namespace AuthenticationService.DataLayer.Context
         public DbSet<Role> Roles { get; set; }
         public DbSet<Application> Applications { get; set; }
         public DbSet<Permission> Permissions { get; set; }
+        public DbSet<AuthenticationLog> AuthenticationLogs { get; set; }
     }
 }

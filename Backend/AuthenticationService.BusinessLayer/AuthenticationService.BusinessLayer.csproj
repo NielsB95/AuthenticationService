@@ -9,5 +9,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\Dashboard\" />
+    <Folder Include="Entities\AuthenticationLogs\" />
   </ItemGroup>
 </Project>
