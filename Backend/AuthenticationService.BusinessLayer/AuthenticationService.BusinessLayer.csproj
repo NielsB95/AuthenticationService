@@ -7,4 +7,7 @@
   <ItemGroup>
       <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.6" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Entities\Dashboard\" />
+  </ItemGroup>
 </Project>

@@ -1,27 +1,25 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import Dates from '../../Util/Dates';
 
-class DashboardLine extends React.Component {
+interface IDashboardLine {
+    data: any[]
+}
+
+class DashboardLine extends React.Component<IDashboardLine> {
     render() {
-        const data = [
-            { name: 'Monday', value: 4000 },
-            { name: 'Tuesday', value: 3000 },
-            { name: 'Wednesday', value: 2000 },
-            { name: 'Thursday', value: 2780 },
-            { name: 'Friday', value: 1890 },
-            { name: 'Saterday', value: 2390 },
-            { name: 'Sunday', value: 3490 },
-        ];
-
         const textStyling = {
             fontFamily: 'Helvetica'
         };
 
+        // Format the date
+        this.props.data.map(x => x.date = Dates.FormatDate(x.date));
+
         return (
             <ResponsiveContainer>
-                <LineChart data={data} margin={{ top: 5, right: 40, bottom: 5, left: 0 }}>
+                <LineChart data={this.props.data} margin={{ top: 5, right: 40, bottom: 5, left: 0 }}>
                     <Line type="natural" dataKey="value" stroke="#8884d8" />
-                    <XAxis dataKey="name" />
+                    <XAxis dataKey="date" />
                     <YAxis />
                     <Tooltip labelStyle={textStyling} itemStyle={textStyling} />
                 </LineChart>
