@@ -5,6 +5,6 @@ namespace AuthenticationService.BusinessLayer.Entities.Dashboard
 {
     public interface IDashboardRepository : IRepository
     {
-        Task<IList<DateValuePair>> AccountsFromLastWeek();
+        Task<IList<DateValuePair>> GetUsersFromLastDays(int days);
     }
 }

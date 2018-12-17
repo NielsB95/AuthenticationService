@@ -19,7 +19,7 @@ namespace AuthenticationService.Controllers
         [HttpGet]
         public async Task<ActionResult<IList<DateValuePair>>> GetUsersFromLastWeek()
         {
-            return Ok(await this.dashboardRepository.AccountsFromLastWeek());
+            return Ok(await this.dashboardRepository.GetUsersFromLastDays(14));
         }
     }
 }

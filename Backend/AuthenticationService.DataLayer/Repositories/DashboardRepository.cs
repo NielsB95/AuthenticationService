@@ -16,17 +16,20 @@ namespace AuthenticationService.DataLayer.Repositories
             this.context = context;
         }
 
-        public async Task<IList<DateValuePair>> AccountsFromLastWeek()
+        public async Task<IList<DateValuePair>> GetUsersFromLastDays(int days)
         {
-            var start = DateTime.Today.AddDays(-7);
+            if (days < 0)
+                throw new ArgumentException("Days cannot be negative", nameof(days));
+
+            var start = DateTime.Today.AddDays(-days);
             var end = DateTime.Today;
-            var dates = Enumerable.Range(0, 1 + end.Subtract(start).Days)
+            var dates = Enumerable.Range(0, end.Subtract(start).Days)
                   .Select(offset => start.AddDays(offset))
                   .ToArray();
 
             return await (from date in dates
                           let sumUsers = (from user in context.Users
-                                          where user.CreatedAt < date
+                                          where user.CreatedAt.Date <= date
                                           select user).Count()
 
                           select new DateValuePair()
