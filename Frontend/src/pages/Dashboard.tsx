@@ -11,12 +11,12 @@ const styles = (theme: any) => ({
         flexGrow: 1,
     },
     paper: {
-        height: 240,
+        height: 300,
     },
     paperHeader: {
         margin: 0,
         marginBottom: 10,
-        padding: 5,
+        padding: 8,
     },
     control: {
         padding: theme.spacing.unit * 2,
