@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import Users from './Users';
 import Roles from './Roles';
 import NotFound from './NotFound'
-import General from './General';
+import Dashboard from './Dashboard';
 
 class Content extends React.Component {
 
@@ -12,10 +12,10 @@ class Content extends React.Component {
             <div>
                 <div>
                     <Switch>
-                        <Route exact path="/" component={Users} />
+                        <Route exact path="/" component={Dashboard} />
                         <Route path="/users" component={Users} />
                         <Route path="/roles" component={Roles} />
-                        <Route path="/general" component={General} />
+                        <Route path="/dashboard" component={Dashboard} />
                         <Route component={NotFound} />
                     </Switch>
                 </div>

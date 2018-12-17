@@ -22,7 +22,7 @@ const styles = (theme: any) => ({
     },
 });
 
-class General extends React.Component<{ classes: any }> {
+class Dashboard extends React.Component<{ classes: any }> {
     render() {
         const { classes } = this.props;
 
@@ -30,14 +30,10 @@ class General extends React.Component<{ classes: any }> {
             <Grid container spacing={16} justify="flex-start">
                 <Grid item xs={12} md={6}>
                     <Paper className={classes.paperHeader}>
-                        <h3 style={{ margin: 0 }}>Number of users</h3>
+                        <h3 style={{ margin: 0 }}>Total number of users</h3>
                     </Paper>
                     <Paper className={classes.paper}>
-                        {/* <h3>Number of users</h3> */}
-                        <div style={{ height: '100%' }}>
-
-                            <NumberOfUsers />
-                        </div>
+                        <NumberOfUsers />
                     </Paper>
                 </Grid>
 
@@ -46,11 +42,7 @@ class General extends React.Component<{ classes: any }> {
                         <h3 style={{ margin: 0 }}>Activity</h3>
                     </Paper>
                     <Paper className={classes.paper}>
-                        {/* <h3>Number of users</h3> */}
-                        <div style={{ height: '100%' }}>
-
-                            <NumberOfUsers />
-                        </div>
+                        <NumberOfUsers />
                     </Paper>
                 </Grid>
             </Grid >
@@ -58,4 +50,4 @@ class General extends React.Component<{ classes: any }> {
     }
 }
 
-export default withStyles(styles)(General);
+export default withStyles(styles)(Dashboard);

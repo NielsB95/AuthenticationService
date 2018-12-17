@@ -149,12 +149,12 @@ class MiniDrawer extends React.Component {
                     </div>
                     <Divider />
                     <List>
-                        <Link to='/General'>
+                        <Link to='/Dashboard'>
                             <ListItem button >
                                 <ListItemIcon>
                                     <DashboardIcon />
                                 </ListItemIcon>
-                                <ListItemText primary='General' />
+                                <ListItemText primary='Dashboard' />
                             </ListItem>
                         </Link>
                         <Link to='/Users'>
