@@ -51,7 +51,7 @@ namespace AuthenticationService.DataLayer.Tests
             var repo = new DashboardRepository(context);
             var result = await repo.GetUsersFromLastDays(7);
 
-            Assert.AreEqual(7, result.Count);
+            Assert.AreEqual(8, result.Count);
         }
 
         [TestMethod]
@@ -108,7 +108,7 @@ namespace AuthenticationService.DataLayer.Tests
             var result = await repo.GetUserActivityLastDays(7);
 
             // Check the number of returned rows
-            Assert.AreEqual(7, result.Count);
+            Assert.AreEqual(8, result.Count);
         }
 
         [TestMethod]
