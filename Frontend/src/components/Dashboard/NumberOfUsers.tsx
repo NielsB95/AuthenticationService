@@ -1,5 +1,5 @@
 import React from 'react'
-import DashboardLine from '../charts/DashboardLine';
+import DateTimeValueChart from '../charts/DateTimeValueChart';
 import Settings from '../../settings';
 
 class NumberOfUsers extends React.Component<{}, { data: [] }> {
@@ -18,7 +18,7 @@ class NumberOfUsers extends React.Component<{}, { data: [] }> {
 
     render() {
         return (
-            <DashboardLine data={this.state.data} />
+            <DateTimeValueChart data={this.state.data} />
         )
     }
 }

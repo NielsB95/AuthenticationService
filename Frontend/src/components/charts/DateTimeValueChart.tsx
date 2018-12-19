@@ -2,11 +2,11 @@ import React from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import Dates from '../../Util/Dates';
 
-interface IDashboardLine {
+interface IDateTimeValueChart {
     data: any[]
 }
 
-class DashboardLine extends React.Component<IDashboardLine> {
+class DateTimeValueChart extends React.Component<IDateTimeValueChart> {
     iteration: number = 0;
 
     render() {
@@ -30,4 +30,4 @@ class DashboardLine extends React.Component<IDashboardLine> {
     }
 }
 
-export default DashboardLine
+export default DateTimeValueChart

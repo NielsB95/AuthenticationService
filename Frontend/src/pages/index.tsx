@@ -1,9 +1,9 @@
 import React from 'react'
-import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 import MiniDrawer from '../components/MiniDrawer';
 import Content from './Content'
 
-class Index extends React.Component<{}, { users: [] }> {
+class Index extends React.Component {
     render() {
         return (
             <Router>
