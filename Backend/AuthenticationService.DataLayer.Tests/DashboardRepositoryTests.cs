@@ -62,5 +62,13 @@ namespace AuthenticationService.DataLayer.Tests
             var repo = new DashboardRepository(context);
             var result = await repo.GetUsersFromLastDays(-1);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public async Task GetUsersFromLastDaysZero()
+        {
+            var repo = new DashboardRepository(context);
+            var result = await repo.GetUsersFromLastDays(0);
+        }
     }
 }

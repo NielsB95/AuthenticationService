@@ -17,9 +17,15 @@ namespace AuthenticationService.Controllers
         }
 
         [HttpGet("UsersFromLastDays")]
-        public async Task<ActionResult<IList<DateValuePair>>> GetUsersFromLastWeek()
+        public async Task<ActionResult<IList<DateValuePair>>> GetUsersFromLastWeeks()
         {
             return Ok(await this.dashboardRepository.GetUsersFromLastDays(14));
+        }
+
+        [HttpGet("UserActivityFromLastDays")]
+        public async Task<ActionResult<IList<DateValuePair>>> GetActivityFromLastWeeks()
+        {
+            return Ok(await this.dashboardRepository.GetUserActivityLastDays(14));
         }
     }
 }
