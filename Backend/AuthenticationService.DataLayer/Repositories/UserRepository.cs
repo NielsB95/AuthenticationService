@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using AuthenticationService.BusinessLayer.Entities.Users;
+﻿using AuthenticationService.BusinessLayer.Entities.Users;
 using AuthenticationService.DataLayer.Context;
-using System.Linq;
 
 namespace AuthenticationService.DataLayer.Repositories
 {
