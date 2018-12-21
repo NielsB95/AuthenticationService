@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationService.Busin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationService.DataLayer.Tests", "AuthenticationService.DataLayer.Tests\AuthenticationService.DataLayer.Tests.csproj", "{9AD08A79-514E-4117-A3B1-B0F4A2AF2246}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationService.Security", "AuthenticationService.Security\AuthenticationService.Security.csproj", "{330D0554-8C2E-4356-AE9F-03EDC05E2987}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{9AD08A79-514E-4117-A3B1-B0F4A2AF2246}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AD08A79-514E-4117-A3B1-B0F4A2AF2246}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AD08A79-514E-4117-A3B1-B0F4A2AF2246}.Release|Any CPU.Build.0 = Release|Any CPU
+		{330D0554-8C2E-4356-AE9F-03EDC05E2987}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{330D0554-8C2E-4356-AE9F-03EDC05E2987}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{330D0554-8C2E-4356-AE9F-03EDC05E2987}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{330D0554-8C2E-4356-AE9F-03EDC05E2987}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
