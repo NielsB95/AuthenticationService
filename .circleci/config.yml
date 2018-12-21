@@ -9,7 +9,7 @@ jobs:
       - run: cd Backend && dotnet build
   backend_test:
     docker:
-      - image: microsoft/dotnet:2.1.500-sdk-stretch
+      - image: microsoft/dotnet:2.2.100-sdk-stretch
     steps:
       - checkout
       - run: cd Backend && dotnet test
