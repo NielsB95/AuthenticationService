@@ -5,7 +5,7 @@ import ServerStatus from '../components/Dashboard/ServerStatus';
 class ServerConnection extends React.Component<{}, { status: string, timestamp: Date }> {
 
     intervalID: any;
-    statusInterval: number = 2000;
+    statusInterval: number = 5000;
 
     constructor(props: any) {
         super(props);
@@ -49,7 +49,8 @@ class ServerConnection extends React.Component<{}, { status: string, timestamp: 
             .then(status => this.setState({
                 status,
                 timestamp: new Date()
-            }));
+            }))
+            .catch(() => this.setState({ status: 'unhealthy' }));
     }
 }
 
