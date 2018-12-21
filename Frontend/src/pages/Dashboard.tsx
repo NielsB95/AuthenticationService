@@ -3,8 +3,8 @@ import { Grid } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import NumberOfUsers from '../components/Dashboard/NumberOfUsers';
-import { blue } from '@material-ui/core/colors';
 import UserActivity from '../components/Dashboard/UserActivity';
+import ServerConnection from '../dataComponents/ServerConnection';
 
 const styles = (theme: any) => ({
     root: {
@@ -44,6 +44,15 @@ class Dashboard extends React.Component<{ classes: any }> {
                     </Paper>
                     <Paper className={classes.paper}>
                         <UserActivity />
+                    </Paper>
+                </Grid>
+
+                <Grid item xs={3} md={3}>
+                    <Paper className={classes.paperHeader}>
+                        <h3 style={{ margin: 0 }}>Server connection</h3>
+                    </Paper>
+                    <Paper className={classes.paper}>
+                        <ServerConnection />
                     </Paper>
                 </Grid>
             </Grid >

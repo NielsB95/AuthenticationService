@@ -20,8 +20,8 @@ namespace AuthenticationService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDataLayer();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +43,10 @@ namespace AuthenticationService
                        .AllowAnyHeader()
                        .AllowAnyMethod();
             });
+
+            // Add an endpoint for health checking.
+            app.UseHealthChecks("/health");
+
             app.UseMvc();
         }
     }

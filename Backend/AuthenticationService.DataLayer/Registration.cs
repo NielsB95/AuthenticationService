@@ -31,6 +31,7 @@ namespace AuthenticationService.DataLayer
         {
             services.AddDatabaseContext();
             services.AddRepositories();
+            services.AddDatabaseHealthCheck();
 
             return services;
         }
@@ -83,5 +84,14 @@ namespace AuthenticationService.DataLayer
 
             return services;
         }
+
+        private static IServiceCollection AddDatabaseHealthCheck(this IServiceCollection services)
+        {
+            services.AddHealthChecks()
+                .AddDbContextCheck<AuthenticationServiceContext>();
+
+            return services;
+        }
+
     }
 }
