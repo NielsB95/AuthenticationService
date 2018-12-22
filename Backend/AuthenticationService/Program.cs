@@ -3,16 +3,16 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace AuthenticationService
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateWebHostBuilder(args).Build().Run();
-        }
+	public class Program
+	{
+		public static void Main(string[] args)
+		{
+			CreateWebHostBuilder(args).Build().Run();
+		}
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseUrls("http://localhost:5000", "http://192.168.2.29:5000")
-                .UseStartup<Startup>();
-    }
+		public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+			WebHost.CreateDefaultBuilder(args)
+				.UseUrls("http://localhost:5000")
+				.UseStartup<Startup>();
+	}
 }

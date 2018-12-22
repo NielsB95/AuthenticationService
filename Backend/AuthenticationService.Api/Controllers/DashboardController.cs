@@ -1,30 +1,30 @@
-﻿using System.Threading.Tasks;
-using System.Collections.Generic;
+﻿using AuthenticationService.BusinessLayer.Entities.Dashboard;
 using Microsoft.AspNetCore.Mvc;
-using AuthenticationService.BusinessLayer.Entities.Dashboard;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AuthenticationService.Api.Controllers
 {
-    [Route("Dashboard")]
-    public class DashboardController : ControllerBase
-    {
-        private IDashboardRepository dashboardRepository;
+	[Route("Dashboard")]
+	public class DashboardController : ControllerBase
+	{
+		private readonly IDashboardRepository dashboardRepository;
 
-        public DashboardController(IDashboardRepository dashboardRepository)
-        {
-            this.dashboardRepository = dashboardRepository;
-        }
+		public DashboardController(IDashboardRepository dashboardRepository)
+		{
+			this.dashboardRepository = dashboardRepository;
+		}
 
-        [HttpGet("UsersFromLastDays")]
-        public async Task<ActionResult<IList<DateValuePair>>> GetUsersFromLastWeeks()
-        {
-            return Ok(await this.dashboardRepository.GetUsersFromLastDays(14));
-        }
+		[HttpGet("UsersFromLastDays")]
+		public async Task<ActionResult<IList<DateValuePair>>> GetUsersFromLastDays()
+		{
+			return Ok(await this.dashboardRepository.GetUsersFromLastDays(14));
+		}
 
-        [HttpGet("UserActivityFromLastDays")]
-        public async Task<ActionResult<IList<DateValuePair>>> GetActivityFromLastWeeks()
-        {
-            return Ok(await this.dashboardRepository.GetUserActivityLastDays(14));
-        }
-    }
+		[HttpGet("UserActivityFromLastDays")]
+		public async Task<ActionResult<IList<DateValuePair>>> GetActivityFromLastDays()
+		{
+			return Ok(await this.dashboardRepository.GetUserActivityLastDays(14));
+		}
+	}
 }
