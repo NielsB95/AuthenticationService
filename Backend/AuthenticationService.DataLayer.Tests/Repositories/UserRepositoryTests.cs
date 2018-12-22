@@ -58,6 +58,15 @@ namespace AuthenticationService.DataLayer.Tests.Repositories
 			Assert.AreEqual("John", john.Firstname);
 		}
 
+		[TestMethod]
+		public async Task GetByUsernameUnknownTest()
+		{
+			var repo = new UserRepository(context);
+			var unkown = await repo.GetByUsername("Unknown");
+
+			Assert.IsNull(unkown);
+		}
+
 		[TestCleanup]
 		public void CleanUp()
 		{

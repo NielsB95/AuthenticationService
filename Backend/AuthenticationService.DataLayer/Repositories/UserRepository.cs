@@ -19,7 +19,7 @@ namespace AuthenticationService.DataLayer.Repositories
 			return await (context.Users
 				.Where(x => x.Username.ToLower() == username.ToLower())
 				.ToAsyncEnumerable())
-				.Single();
+				.SingleOrDefault();
 		}
 	}
 }

@@ -8,6 +8,12 @@ namespace AuthenticationService.Security
 	{
 		public bool Compare(User user, string presentedPassword)
 		{
+			if (user == null)
+				throw new ArgumentNullException(nameof(user));
+
+			if (string.IsNullOrEmpty(presentedPassword))
+				throw new ArgumentNullException(nameof(presentedPassword));
+
 			var salt = SaltGenerator(user);
 			var presetnedPasswordHashed = Hash(salt, presentedPassword);
 
