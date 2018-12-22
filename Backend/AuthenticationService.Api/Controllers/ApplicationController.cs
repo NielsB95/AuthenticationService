@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using AuthenticationService.BusinessLayer.Entities.Applications;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AuthenticationService.Controllers
+namespace AuthenticationService.Api.Controllers
 {
     [Route("Applications")]
     public class ApplicationController : ControllerBase

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using AuthenticationService.BusinessLayer.Entities.Permissions;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AuthenticationService.Controllers
+namespace AuthenticationService.Api.Controllers
 {
     [Route("Permissions")]
     public class PermissionController : ControllerBase

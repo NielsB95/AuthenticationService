@@ -1,10 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using AuthenticationService.BusinessLayer.Entities.Dashboard;
 
-namespace AuthenticationService.Controllers
+namespace AuthenticationService.Api.Controllers
 {
     [Route("Dashboard")]
     public class DashboardController : ControllerBase

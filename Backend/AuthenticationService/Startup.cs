@@ -1,4 +1,5 @@
-﻿using AuthenticationService.DataLayer;
+﻿using System.Reflection;
+using AuthenticationService.DataLayer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,10 @@ namespace AuthenticationService
         {
             services.AddCors();
             services.AddDataLayer();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc()
+                // Include controllers from the Api assembly.
+                .AddApplicationPart(Assembly.Load("AuthenticationService.Api"))
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

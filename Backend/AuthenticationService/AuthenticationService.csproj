@@ -8,6 +8,7 @@
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\AuthenticationService.DataLayer\AuthenticationService.DataLayer.csproj" />
+        <ProjectReference Include="..\AuthenticationService.Api\AuthenticationService.Api.csproj" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.App" />

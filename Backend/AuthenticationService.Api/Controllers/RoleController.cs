@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using AuthenticationService.BusinessLayer.Entities.Roles;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AuthenticationService.Controllers
+namespace AuthenticationService.Api.Controllers
 {
     [Route("Roles")]
     public class RoleController : ControllerBase
