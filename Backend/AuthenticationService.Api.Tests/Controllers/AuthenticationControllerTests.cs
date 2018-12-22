@@ -1,7 +1,9 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 using AuthenticationService.Api.Controllers;
+using AuthenticationService.Api.Models;
 using AuthenticationService.Api.Util;
+using AuthenticationService.BusinessLayer.Entities.Users;
 using AuthenticationService.Security;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +17,7 @@ namespace AuthenticationService.Api.Tests.Controllers
     {
         private IAuthenticator authenticator;
         private IIPAddressTools ipAddressTools;
+        private IUserRepository userRepository;
         private AuthenticationController controller;
 
         [TestInitialize]
@@ -30,7 +33,11 @@ namespace AuthenticationService.Api.Tests.Controllers
             mockIPAddressTools.Setup(x => x.GetIPAddress(It.IsAny<HttpContext>())).Returns(ipAddress);
             ipAddressTools = mockIPAddressTools.Object;
 
-            controller = new AuthenticationController(authenticator, ipAddressTools);
+            var mockUserRepository = new Mock<IUserRepository>();
+            mockUserRepository.Setup(x => x.GetByUsername(It.IsAny<string>())).ReturnsAsync(new User() { Firstname = "John" });
+            userRepository = mockUserRepository.Object;
+
+            controller = new AuthenticationController(authenticator, ipAddressTools, userRepository);
         }
 
         [TestMethod]
@@ -38,10 +45,11 @@ namespace AuthenticationService.Api.Tests.Controllers
         {
             var response = await controller.Authenticate("John", "pass");
             var responseResult = response.Result as OkObjectResult;
-            var token = responseResult.Value as string;
+            var model = responseResult.Value as AuthenticationModel;
 
             Assert.AreEqual(200, responseResult.StatusCode);
-            Assert.AreEqual("VALID_TOKEN", token);
+            Assert.AreEqual("VALID_TOKEN", model.Token);
+            Assert.AreEqual("John", model.User.Firstname);
         }
 
         [TestMethod]

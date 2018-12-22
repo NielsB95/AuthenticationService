@@ -1,4 +1,6 @@
-﻿using AuthenticationService.Api.Util;
+﻿using AuthenticationService.Api.Models;
+using AuthenticationService.Api.Util;
+using AuthenticationService.BusinessLayer.Entities.Users;
 using AuthenticationService.Security;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -10,11 +12,13 @@ namespace AuthenticationService.Api.Controllers
     {
         private readonly IAuthenticator authenticator;
         private readonly IIPAddressTools ipAddressTools;
+        private readonly IUserRepository userRepository;
 
-        public AuthenticationController(IAuthenticator authenticator, IIPAddressTools ipAddressTools)
+        public AuthenticationController(IAuthenticator authenticator, IIPAddressTools ipAddressTools, IUserRepository userRepository)
         {
             this.authenticator = authenticator;
             this.ipAddressTools = ipAddressTools;
+            this.userRepository = userRepository;
         }
 
         [HttpPost]
@@ -30,8 +34,15 @@ namespace AuthenticationService.Api.Controllers
             if (string.IsNullOrEmpty(token))
                 return Unauthorized();
 
-            // Return the token.
-            return Ok(token);
+            // Compose the AuthenticationModel
+            var authenticationModel = new AuthenticationModel()
+            {
+                User = await userRepository.GetByUsername(username),
+                Token = token
+            };
+
+            // Return the AuthenticationModel.
+            return Ok(authenticationModel);
         }
     }
 }
