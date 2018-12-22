@@ -112,6 +112,14 @@ namespace AuthenticationService.DataLayer.Tests.Repositories
 		}
 
 		[TestMethod]
+		[ExpectedException(typeof(ArgumentException))]
+		public async Task GetUserActivityNegativeTest()
+		{
+			var repo = new DashboardRepository(context);
+			var result = await repo.GetUserActivityLastDays(-1);
+		}
+
+		[TestMethod]
 		public async Task GetUserActivityRowValidation()
 		{
 			var repo = new DashboardRepository(context);

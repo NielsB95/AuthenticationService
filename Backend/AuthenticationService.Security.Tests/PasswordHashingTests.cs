@@ -95,5 +95,12 @@ namespace AuthenticationService.Security.Tests
 			Assert.IsTrue(hasher.Compare(user, "pass"));
 			Assert.IsFalse(hasher.Compare(user, "Pass"));
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void CompareNullUserTest()
+		{
+			hasher.Compare(null, "");
+		}
 	}
 }

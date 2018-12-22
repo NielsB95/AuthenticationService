@@ -61,9 +61,6 @@ namespace AuthenticationService.Security.Tests
 		{
 			var ipAddress = new IPAddress(0x00000);
 			var result = await authenticator.Authenticate(null, "pass", ipAddress);
-
-			Assert.AreNotEqual("", result);
-			Assert.IsNotNull(result);
 		}
 
 		[TestMethod]
@@ -127,6 +124,13 @@ namespace AuthenticationService.Security.Tests
 
 			// On fail, beforeCount should equal afterCount
 			Assert.AreEqual(beforeCount, afterCount);
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void GenerateTokenNUllUserTest()
+		{
+			tokenGenerator.GenerateToken(null, null);
 		}
 
 		[TestCleanup]
