@@ -7,7 +7,6 @@
         <ProjectReference Include="..\AuthenticationService.BusinessLayer\AuthenticationService.BusinessLayer.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="Repositories\" />
         <Folder Include="Context\" />
         <Folder Include="Util\" />
     </ItemGroup>

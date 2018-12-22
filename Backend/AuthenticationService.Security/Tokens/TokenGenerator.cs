@@ -1,4 +1,5 @@
 ﻿using AuthenticationService.BusinessLayer.Entities.Users;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -8,12 +9,25 @@ using System.Security.Cryptography;
 
 namespace AuthenticationService.Security.Tokens
 {
-	public static class TokenGenerator
+	public class TokenGenerator
 	{
-		public static string GenerateToken(User user, IPAddress ipAddress, int expireMinutes = 20)
+		private readonly string secret;
+		public TokenGenerator(IConfiguration configuration)
 		{
+			secret = configuration["Secret"];
+		}
+
+		public string GenerateToken(User user, IPAddress ipAddress, int expireMinutes = 20)
+		{
+			if (user == null)
+				throw new ArgumentNullException(nameof(user));
+
+			if (ipAddress == null)
+				throw new ArgumentNullException(nameof(ipAddress));
+
+
 			var key = Convert.ToBase64String(new HMACSHA256().Key);
-			var symmetricKey = Convert.FromBase64String("");
+			var symmetricKey = Convert.FromBase64String(secret);
 			var tokenHandler = new JwtSecurityTokenHandler();
 
 			var claims = new[] {

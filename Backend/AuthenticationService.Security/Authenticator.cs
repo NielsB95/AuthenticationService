@@ -1,30 +1,52 @@
-﻿using AuthenticationService.BusinessLayer.Entities.Users;
+﻿using AuthenticationService.BusinessLayer.Entities.AuthenticationLogs;
+using AuthenticationService.BusinessLayer.Entities.Users;
+using AuthenticationService.Security.Tokens;
+using System;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace AuthenticationService.Security
 {
 	public class Authenticator
 	{
 		private readonly IUserRepository userRepository;
+		private readonly IAuthenticationLogRepository authenticationLogRepository;
+		private readonly PasswordHashing passwordHashing;
+		private readonly TokenGenerator tokenGenerator;
 
-		public Authenticator(IUserRepository userRepository)
+
+		public Authenticator(IUserRepository userRepository, IAuthenticationLogRepository authenticationLogRepository, PasswordHashing passwordHashing, TokenGenerator tokenGenerator)
 		{
 			this.userRepository = userRepository;
+			this.authenticationLogRepository = authenticationLogRepository;
+			this.passwordHashing = passwordHashing;
+			this.tokenGenerator = tokenGenerator;
 		}
 
-		public string Authenticate(string username, string password, IPAddress ipAddress)
+		public async Task<string> Authenticate(string username, string password, IPAddress ipAddress)
 		{
-			var user = userRepository.GetByUsername(username);
+			// Get the user that matches the username.
+			var user = await userRepository.GetByUsername(username);
 
 			// There is no one in our database with this username.
 			if (user == null)
 				return string.Empty;
 
+			var success = passwordHashing.Compare(user, password);
 
+			// .. also return an empty string if the password didn't match.
+			if (!success)
+				return string.Empty;
 
+			// .. add a new logentiry to the authenticationlog.
+			await authenticationLogRepository.Add(new AuthenticationLog()
+			{
+				CreatedAt = DateTime.Now,
+				User = user
+			});
 
-
-			return string.Empty;
+			var token = tokenGenerator.GenerateToken(user, ipAddress);
+			return token;
 		}
 	}
 }
