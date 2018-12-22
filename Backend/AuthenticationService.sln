@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationService.Secur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationService.Api", "AuthenticationService.Api\AuthenticationService.Api.csproj", "{AABEC505-0C87-4AFA-8E99-774CB81474FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationService.Api.Tests", "AuthenticationService.Api.Tests\AuthenticationService.Api.Tests.csproj", "{92B8DCE8-0D00-4A43-A35F-DC976E4AE095}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{AABEC505-0C87-4AFA-8E99-774CB81474FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AABEC505-0C87-4AFA-8E99-774CB81474FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AABEC505-0C87-4AFA-8E99-774CB81474FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92B8DCE8-0D00-4A43-A35F-DC976E4AE095}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92B8DCE8-0D00-4A43-A35F-DC976E4AE095}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92B8DCE8-0D00-4A43-A35F-DC976E4AE095}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92B8DCE8-0D00-4A43-A35F-DC976E4AE095}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

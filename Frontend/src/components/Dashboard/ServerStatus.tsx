@@ -6,14 +6,15 @@ class ServerStatus extends React.Component<{ status: string, timestamp: Date }> 
     render() {
         return (
             <div>
-                <p>
+                <span>
                     This service has a {this.props.status.toLowerCase()} connection.
-                </p>
-                <p>
+                </span>
+                <br />
+                <span>
                     {Dates.FormatDate(this.props.timestamp)}
                     &nbsp;
                     {Dates.FormatTime(this.props.timestamp)}
-                </p>
+                </span>
             </div>
         );
     }

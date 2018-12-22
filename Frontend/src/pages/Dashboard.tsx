@@ -11,7 +11,7 @@ const styles = (theme: any) => ({
         flexGrow: 1,
     },
     paper: {
-        height: 300,
+        height: 250,
     },
     paperHeader: {
         margin: 0,
@@ -29,7 +29,16 @@ class Dashboard extends React.Component<{ classes: any }> {
 
         return (
             <Grid container spacing={16} justify="flex-start">
-                <Grid item xs={12} md={6}>
+                <Grid item xs={2} md={2}>
+                    <Paper className={classes.paperHeader}>
+                        <h3 style={{ margin: 0 }}>Server connection</h3>
+                    </Paper>
+                    <Paper className={classes.paper}>
+                        <ServerConnection />
+                    </Paper>
+                </Grid>
+
+                <Grid item xs={12} md={5}>
                     <Paper className={classes.paperHeader}>
                         <h3 style={{ margin: 0 }}>Total number of users</h3>
                     </Paper>
@@ -38,21 +47,12 @@ class Dashboard extends React.Component<{ classes: any }> {
                     </Paper>
                 </Grid>
 
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={5}>
                     <Paper className={classes.paperHeader}>
                         <h3 style={{ margin: 0 }}>Activity</h3>
                     </Paper>
                     <Paper className={classes.paper}>
                         <UserActivity />
-                    </Paper>
-                </Grid>
-
-                <Grid item xs={3} md={3}>
-                    <Paper className={classes.paperHeader}>
-                        <h3 style={{ margin: 0 }}>Server connection</h3>
-                    </Paper>
-                    <Paper className={classes.paper}>
-                        <ServerConnection />
                     </Paper>
                 </Grid>
             </Grid >
