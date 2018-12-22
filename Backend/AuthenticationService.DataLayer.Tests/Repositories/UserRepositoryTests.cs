@@ -49,6 +49,15 @@ namespace AuthenticationService.DataLayer.Tests.Repositories
 			Assert.AreEqual("John", john.Firstname);
 		}
 
+		[TestMethod]
+		public async Task GetByUserNameUpperCaseTest()
+		{
+			var repo = new UserRepository(context);
+			var john = await repo.GetByUsername("JOHNNY");
+
+			Assert.AreEqual("John", john.Firstname);
+		}
+
 		[TestCleanup]
 		public void CleanUp()
 		{

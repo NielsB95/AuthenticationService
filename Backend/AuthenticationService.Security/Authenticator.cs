@@ -14,6 +14,12 @@ namespace AuthenticationService.Security
 
 		public string Authenticate(string username, string password, IPAddress ipAddress)
 		{
+			var user = userRepository.GetByUsername(username);
+
+			// There is no one in our database with this username.
+			if (user == null)
+				return string.Empty;
+
 
 
 

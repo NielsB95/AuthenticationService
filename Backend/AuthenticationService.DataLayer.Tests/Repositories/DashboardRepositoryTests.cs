@@ -7,7 +7,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AuthenticationService.DataLayer.Tests
+namespace AuthenticationService.DataLayer.Tests.Repositories
 {
 	[TestClass]
 	public class DashboardRepositoryTests

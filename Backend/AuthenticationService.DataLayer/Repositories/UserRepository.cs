@@ -17,7 +17,7 @@ namespace AuthenticationService.DataLayer.Repositories
 				throw new ArgumentNullException("Username needs to be defined.", nameof(username));
 
 			return await (context.Users
-				.Where(x => x.Username == username)
+				.Where(x => x.Username.ToLower() == username.ToLower())
 				.ToAsyncEnumerable())
 				.Single();
 		}
