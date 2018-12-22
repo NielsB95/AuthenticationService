@@ -12,7 +12,7 @@ jobs:
       - image: microsoft/dotnet:2.2.100-sdk-stretch
     steps:
       - checkout
-      - run: cd Backend && dotnet test
+      - run: cd Backend && dotnet test -r
   frontend_build:
     docker:
       - image: circleci/node:8.9.1
