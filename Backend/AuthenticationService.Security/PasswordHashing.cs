@@ -16,13 +16,16 @@ namespace AuthenticationService.Security
 
 		public User Hash(User user)
 		{
+			if (user == null)
+				throw new ArgumentNullException(nameof(user));
+
 			var salt = SaltGenerator(user);
 			user.Password = Hash(salt, user.Password);
 
 			return user;
 		}
 
-		private string Hash(byte[] salt, string password)
+		internal string Hash(byte[] salt, string password)
 		{
 			// derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
 			string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
@@ -35,7 +38,7 @@ namespace AuthenticationService.Security
 			return hashed;
 		}
 
-		private byte[] SaltGenerator(User user)
+		internal byte[] SaltGenerator(User user)
 		{
 			// Convert Int64 timestamp to Int32 by taking 
 			// its HashCode. We're not really interested in the actual value,
