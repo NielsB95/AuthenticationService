@@ -36,8 +36,8 @@ class Login extends React.Component<{ styles: any }, { username: string, passwor
         const card: any = {
             paddingTop: 20,
             paddingBottom: 20,
-            paddingLeft: 50,
-            paddingRight: 50,
+            paddingLeft: 30,
+            paddingRight: 30,
             width: '100%'
         }
 
@@ -48,17 +48,17 @@ class Login extends React.Component<{ styles: any }, { username: string, passwor
                 <Grid
                     container
                     spacing={0}
-                    direction="column"
-                    alignItems="center"
+                    direction="row"
                     justify="center"
                     style={{ minHeight: '60vh' }}
                 >
-                    <Grid item>
+
+                    <Grid item xs={4}>
                         <Paper style={card}>
                             <h2>Login</h2>
-                            <FormControl >
-                                <TextField label="Username" name='username' value={username} onChange={this.handleChange} required />
-                                <TextField label="Password" name='password' value={password} onChange={this.handleChange} type="password" required />
+                            <FormControl fullWidth>
+                                <TextField label="Username" name='username' value={username} onChange={this.handleChange} fullWidth required />
+                                <TextField label="Password" name='password' value={password} onChange={this.handleChange} fullWidth type="password" required />
                                 <Button type="submit" onClick={this.handleLogin}>Login</Button>
                             </FormControl>
                         </Paper>

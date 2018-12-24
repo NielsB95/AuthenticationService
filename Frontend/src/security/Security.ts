@@ -55,4 +55,19 @@ let CanAuthenticate = () => {
     return true;
 }
 
-export { LogOff, LogIn, CanAuthenticate };
+interface IUser {
+    firstName: string,
+    lastName: string,
+    username: string
+}
+let GetUser = (): IUser => {
+    let rawUser = localStorage.getItem(localStorage_user);
+
+    if (!rawUser)
+        return { firstName: "", lastName: "", username: "" }
+
+    let user = JSON.parse(rawUser);
+    return user;
+}
+
+export { LogOff, LogIn, CanAuthenticate, GetUser };
