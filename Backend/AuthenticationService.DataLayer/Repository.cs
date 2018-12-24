@@ -13,10 +13,6 @@ namespace AuthenticationService.DataLayer
         protected AuthenticationServiceContext context;
         protected object lockObject = new object();
 
-        // Interal repository for testing purposes.
-        internal Repository()
-        { }
-
         protected Repository(AuthenticationServiceContext context)
         {
             this.context = context;
