@@ -1,6 +1,7 @@
 import React from 'react';
 import RoleList from '../components/RoleList';
 import Settings from '../settings';
+import { Promise } from 'q';
 
 class Roles extends React.Component<{}, { roles: [] }> {
 
@@ -16,9 +17,9 @@ class Roles extends React.Component<{}, { roles: [] }> {
             .then(response => response.json())
             .then(roles => {
                 this.setState({ roles: roles });
-            });
+            })
+            .catch(error => console.log(error));
     }
-
 
     render() {
         return (

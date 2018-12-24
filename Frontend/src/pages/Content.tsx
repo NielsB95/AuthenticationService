@@ -5,6 +5,8 @@ import Roles from './Roles';
 import NotFound from './NotFound'
 import Dashboard from './Dashboard';
 import Applications from './Applications';
+import Login from './Login';
+import PrivateRoute from '../components/Authentication/PrivateRoute';
 
 class Content extends React.Component {
 
@@ -14,11 +16,12 @@ class Content extends React.Component {
                 <div>
                     <Switch>
                         <Route exact path="/" component={Dashboard} />
-                        <Route path="/users" component={Users} />
-                        <Route path="/roles" component={Roles} />
+                        <Route path="/login" component={Login} />
                         <Route path="/dashboard" component={Dashboard} />
-                        <Route path="/applications" component={Applications} />
-                        <Route component={NotFound} />
+                        <PrivateRoute path="/users" component={Users} />
+                        <PrivateRoute path="/roles" component={Roles} />
+                        <PrivateRoute path="/applications" component={Applications} />
+                        <PrivateRoute component={NotFound} />
                     </Switch>
                 </div>
             </div>

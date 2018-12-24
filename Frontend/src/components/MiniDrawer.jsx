@@ -22,6 +22,7 @@ import ComputerIcon from '@material-ui/icons/Computer';
 import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
 import { Link } from 'react-router-dom';
 import ExitToApp from '@material-ui/icons/ExitToApp'
+import { LogOff } from '../security/Security';
 
 const drawerWidth = 240;
 
@@ -184,14 +185,10 @@ class MiniDrawer extends React.Component {
                     </List>
                     <Divider />
                     <List>
-                        {['Logout'].map((text, index) => (
-                            <Link to={`/${text}`} key={text}>
-                                <ListItem button >
-                                    <ListItemIcon><ExitToApp /></ListItemIcon>
-                                    <ListItemText primary={text} />
-                                </ListItem>
-                            </Link>
-                        ))}
+                        <ListItem button onClick={LogOff}>
+                            <ListItemIcon><ExitToApp /></ListItemIcon>
+                            <ListItemText primary='Log out' />
+                        </ListItem>
                     </List>
                 </Drawer>
                 <main className={classes.content}>

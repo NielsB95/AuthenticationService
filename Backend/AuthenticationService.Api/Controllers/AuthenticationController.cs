@@ -2,6 +2,7 @@
 using AuthenticationService.Api.Util;
 using AuthenticationService.BusinessLayer.Entities.Users;
 using AuthenticationService.Security;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@ namespace AuthenticationService.Api.Controllers
 {
     [Route("Authenticate")]
     [Produces("application/json")]
+    [AllowAnonymous]
     public class AuthenticationController : ControllerBase
     {
         private readonly IAuthenticator authenticator;
@@ -23,7 +25,7 @@ namespace AuthenticationService.Api.Controllers
         }
 
         [HttpPost]
-        public virtual async Task<ActionResult<Task>> Authenticate(string username, string password)
+        public virtual async Task<ActionResult<Task>> Authenticate([FromForm]string username, [FromForm] string password)
         {
             // Get the ip where the user requested the token from.
             var ipAddress = this.ipAddressTools.GetIPAddress(this.HttpContext);

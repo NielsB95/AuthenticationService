@@ -17,7 +17,8 @@ class Applications extends React.Component<{}, { applications: [] }> {
             .then(response => response.json())
             .then(applications => {
                 this.setState({ applications });
-            });
+            })
+            .catch(error => console.log(error));;
     }
 
     render() {
