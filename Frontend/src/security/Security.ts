@@ -55,11 +55,16 @@ let CanAuthenticate = () => {
     return true;
 }
 
+interface IUser {
+    firstname: string,
+    lastname: string,
+    username: string
+}
 let GetUser = (): IUser => {
     let rawUser = localStorage.getItem(localStorage_user);
 
     if (!rawUser)
-        return { firstName: "", lastName: "", username: "" }
+        return { firstname: "", lastname: "", username: "" }
 
     let user = JSON.parse(rawUser);
     return user;
