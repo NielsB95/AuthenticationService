@@ -8,6 +8,9 @@ let LogOff = () => {
     localStorage.removeItem(localStorage_isAuthenticated);
     localStorage.removeItem(localStorage_token);
     localStorage.removeItem(localStorage_user);
+
+    if (window.location.pathname !== '/Login')
+        window.location.href = '/Login';
 }
 
 let LogIn = async (username: string, password: string) => {

@@ -37,9 +37,7 @@ class ServerConnection extends React.Component<{}, { status: string, timestamp: 
 
     render() {
         return (
-            <div>
-                <ServerStatus status={this.state.status} timestamp={this.state.timestamp} />
-            </div>
+            <ServerStatus status={this.state.status} timestamp={this.state.timestamp} />
         );
     }
 

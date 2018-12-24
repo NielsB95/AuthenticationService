@@ -1,6 +1,7 @@
 import React from 'react';
 import Settings from '../settings';
 import ApplicationList from '../components/ApplicationList';
+import { GetJson } from '../Util/Requests';
 
 class Applications extends React.Component<{}, { applications: [] }> {
 
@@ -13,8 +14,7 @@ class Applications extends React.Component<{}, { applications: [] }> {
     }
 
     componentDidMount() {
-        fetch(`${Settings.BackendUrl}Applications`)
-            .then(response => response.json())
+        GetJson(`${Settings.BackendUrl}Applications`)
             .then(applications => {
                 this.setState({ applications });
             })

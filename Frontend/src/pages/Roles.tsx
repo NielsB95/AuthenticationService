@@ -2,6 +2,7 @@ import React from 'react';
 import RoleList from '../components/RoleList';
 import Settings from '../settings';
 import { Promise } from 'q';
+import { GetJson } from '../Util/Requests';
 
 class Roles extends React.Component<{}, { roles: [] }> {
 
@@ -13,8 +14,7 @@ class Roles extends React.Component<{}, { roles: [] }> {
     }
 
     componentDidMount() {
-        fetch(`${Settings.BackendUrl}Roles`)
-            .then(response => response.json())
+        GetJson(`${Settings.BackendUrl}Roles`)
             .then(roles => {
                 this.setState({ roles: roles });
             })

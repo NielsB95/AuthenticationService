@@ -1,6 +1,7 @@
 import React from 'react'
 import DateTimeValueChart from '../charts/DateTimeValueChart';
 import Settings from '../../settings';
+import { GetJson } from '../../Util/Requests';
 
 class NumberOfUsers extends React.Component<{}, { data: [] }> {
     constructor(props: object) {
@@ -11,8 +12,7 @@ class NumberOfUsers extends React.Component<{}, { data: [] }> {
     }
 
     componentDidMount() {
-        fetch(`${Settings.BackendUrl}Dashboard/UsersFromLastDays`)
-            .then(response => response.json())
+        GetJson(`${Settings.BackendUrl}Dashboard/UsersFromLastDays`)
             .then(data => this.setState({ data }));
     }
 

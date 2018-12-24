@@ -1,6 +1,7 @@
 import React from 'react';
 import DateTimeValueChart from '../charts/DateTimeValueChart';
 import Settings from '../../settings';
+import { GetJson } from '../../Util/Requests';
 
 class UserActivity extends React.Component<{}, { data: any[] }> {
 
@@ -13,8 +14,7 @@ class UserActivity extends React.Component<{}, { data: any[] }> {
     }
 
     componentDidMount() {
-        fetch(`${Settings.BackendUrl}Dashboard/UserActivityFromLastDays`)
-            .then(response => response.json())
+        GetJson(`${Settings.BackendUrl}Dashboard/UserActivityFromLastDays`)
             .then(data => this.setState({ data }));
     }
 

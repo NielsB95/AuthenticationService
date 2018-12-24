@@ -1,9 +1,10 @@
 import React from 'react';
-import { FormControl, TextField, Button, Paper } from '@material-ui/core';
+import { FormControl, TextField, Button, Paper, withStyles, Grid } from '@material-ui/core';
 import { LogIn, CanAuthenticate } from '../security/Security';
 import { Redirect } from 'react-router';
+import { CSSProperties } from 'jss/css';
 
-class Login extends React.Component<{}, { username: string, password: string, isLoading: boolean, authenticated: boolean }> {
+class Login extends React.Component<{ styles: any }, { username: string, password: string, isLoading: boolean, authenticated: boolean }> {
     constructor(props: any) {
         super(props);
 
@@ -32,17 +33,37 @@ class Login extends React.Component<{}, { username: string, password: string, is
 
     render() {
         const { username, password } = this.state;
+        const card: any = {
+            paddingTop: 20,
+            paddingBottom: 20,
+            paddingLeft: 50,
+            paddingRight: 50,
+            width: '100%'
+        }
+
         return (
             this.state.authenticated ?
                 <Redirect to={{ pathname: '/' }} />
                 :
-                <Paper>
-                    <FormControl >
-                        <TextField label="Username" name='username' value={username} onChange={this.handleChange} required />
-                        <TextField label="Password" name='password' value={password} onChange={this.handleChange} type="password" required />
-                        <Button type="submit" onClick={this.handleLogin}>Login</Button>
-                    </FormControl>
-                </Paper>
+                <Grid
+                    container
+                    spacing={0}
+                    direction="column"
+                    alignItems="center"
+                    justify="center"
+                    style={{ minHeight: '60vh' }}
+                >
+                    <Grid item>
+                        <Paper style={card}>
+                            <h2>Login</h2>
+                            <FormControl >
+                                <TextField label="Username" name='username' value={username} onChange={this.handleChange} required />
+                                <TextField label="Password" name='password' value={password} onChange={this.handleChange} type="password" required />
+                                <Button type="submit" onClick={this.handleLogin}>Login</Button>
+                            </FormControl>
+                        </Paper>
+                    </Grid>
+                </Grid>
         )
     }
 }
