@@ -22,7 +22,7 @@ import ComputerIcon from '@material-ui/icons/Computer';
 import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
 import { Link } from 'react-router-dom';
 import ExitToApp from '@material-ui/icons/ExitToApp'
-import { LogOff, GetUser } from '../security/Security';
+import { LogOff } from '../security/Security';
 
 const drawerWidth = 240;
 

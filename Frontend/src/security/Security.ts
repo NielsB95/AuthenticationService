@@ -55,11 +55,6 @@ let CanAuthenticate = () => {
     return true;
 }
 
-interface IUser {
-    firstName: string,
-    lastName: string,
-    username: string
-}
 let GetUser = (): IUser => {
     let rawUser = localStorage.getItem(localStorage_user);
 
