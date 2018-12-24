@@ -12,19 +12,20 @@ namespace AuthenticationService
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApiTools();
             services.AddCors();
-            services.AddSecurity();
+            services.AddSecurity(Configuration);
             services.AddDataLayer();
             services.AddMvc()
                 // Include controllers from the Api assembly.
@@ -45,6 +46,8 @@ namespace AuthenticationService
             }
 
             //app.UseHttpsRedirection();
+            app.UseSecurity();
+
             app.UseCors(builder =>
             {
                 builder.AllowAnyOrigin()

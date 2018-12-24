@@ -4,9 +4,7 @@ using AuthenticationService.BusinessLayer.Entities.AuthenticationLogs;
 using AuthenticationService.BusinessLayer.Entities.Permissions;
 using AuthenticationService.BusinessLayer.Entities.Roles;
 using AuthenticationService.BusinessLayer.Entities.Users;
-using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
 
 namespace AuthenticationService.DataLayer.Context
 {
@@ -26,6 +24,15 @@ namespace AuthenticationService.DataLayer.Context
             // running unit tests if it hasn't been configured.
             if (!optionsBuilder.IsConfigured)
                 base.OnConfiguring(optionsBuilder);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Role>().HasData(new Role
+            {
+                ID = Guid.NewGuid(),
+                Name = "Super admin"
+            });
         }
 
         public DbSet<User> Users { get; set; }
