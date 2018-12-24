@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormControl, TextField, Button } from '@material-ui/core';
+import { FormControl, TextField, Button, Paper } from '@material-ui/core';
 import { LogIn, CanAuthenticate } from '../security/Security';
 import { Redirect } from 'react-router';
 
@@ -36,11 +36,13 @@ class Login extends React.Component<{}, { username: string, password: string, is
             this.state.authenticated ?
                 <Redirect to={{ pathname: '/' }} />
                 :
-                <FormControl >
-                    <TextField label="Username" name='username' value={username} onChange={this.handleChange} required />
-                    <TextField label="Password" name='password' value={password} onChange={this.handleChange} type="password" required />
-                    <Button type="submit" onClick={this.handleLogin}>Login</Button>
-                </FormControl>
+                <Paper>
+                    <FormControl >
+                        <TextField label="Username" name='username' value={username} onChange={this.handleChange} required />
+                        <TextField label="Password" name='password' value={password} onChange={this.handleChange} type="password" required />
+                        <Button type="submit" onClick={this.handleLogin}>Login</Button>
+                    </FormControl>
+                </Paper>
         )
     }
 }
