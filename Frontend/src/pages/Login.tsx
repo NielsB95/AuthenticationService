@@ -53,7 +53,7 @@ class Login extends React.Component<{ styles: any }, { username: string, passwor
                     style={{ minHeight: '60vh' }}
                 >
 
-                    <Grid item xs={4}>
+                    <Grid item md={4} xs={12}>
                         <Paper style={card}>
                             <h2>Login</h2>
                             <FormControl fullWidth>
