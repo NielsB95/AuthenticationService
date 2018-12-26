@@ -13,6 +13,12 @@ jobs:
     steps:
       - checkout
       - run: cd Backend && dotnet test -r results
+  backend_publish:
+    docker:
+      - image: microsoft/dotnet:2.2.100-sdk-stretch
+    steps:
+      - checkout
+      - run: cd Backend && dotnet publish -c Release
   frontend_build:
     docker:
       - image: circleci/node:8.9.1
@@ -34,6 +40,9 @@ workflows:
     jobs:
       - backend_build
       - backend_test:
+          requires:
+            - backend_build
+      - backend_publish:
           requires:
             - backend_build
       - frontend_build
