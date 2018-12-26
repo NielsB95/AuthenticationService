@@ -19,7 +19,8 @@ class DateTimeValueChart extends React.Component<IDateTimeValueChart> {
             fontFamily: 'Helvetica'
         };
 
-        var primary = this.props.theme.palette.primary.light;
+        // Get the primary colour.
+        var primary = this.props.theme.palette.primary.main;
 
         // Format the date
         this.props.data.map(x => x.date = Dates.FormatDate(x.date));
