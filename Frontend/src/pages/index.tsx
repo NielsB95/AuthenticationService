@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import MiniDrawer from '../components/MiniDrawer';
 import Content from './Content'
 import { createMuiTheme, withTheme, MuiThemeProvider } from '@material-ui/core/styles';
-import blue from '@material-ui/core/colors/red';
+import blue from '@material-ui/core/colors/blue';
 
 const theme = createMuiTheme({
     typography: {
