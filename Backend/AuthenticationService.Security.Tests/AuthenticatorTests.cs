@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -130,8 +131,7 @@ namespace AuthenticationService.Security.Tests
 
             var afterCount = (await authenticationLogRepository.GetAll()).Count;
 
-            // On fail, beforeCount should equal afterCount
-            Assert.AreEqual(beforeCount, afterCount);
+            Assert.AreEqual(beforeCount + 1, afterCount);
         }
 
         [TestMethod]
@@ -143,8 +143,46 @@ namespace AuthenticationService.Security.Tests
 
             var afterCount = (await authenticationLogRepository.GetAll()).Count;
 
-            // On fail, beforeCount should equal afterCount
-            Assert.AreEqual(beforeCount, afterCount);
+            Assert.AreEqual(beforeCount + 1, afterCount);
+        }
+
+        [TestMethod]
+        public async Task AuthenticationLogStatusOnWrongPassTest()
+        {
+            var ipAddress = new IPAddress(0x00000);
+            var result = await authenticator.Authenticate("john", "wrongpass", ipAddress);
+
+            var latestLog = (await authenticationLogRepository.GetAll())
+                            .OrderBy(x => x.CreatedAt)
+                            .First();
+
+            Assert.IsFalse(latestLog.Successful);
+        }
+
+        [TestMethod]
+        public async Task AuthenticationLogStatusOnUnknownUserTest()
+        {
+            var ipAddress = new IPAddress(0x00000);
+            var result = await authenticator.Authenticate("Unknown", "wrongpass", ipAddress);
+
+            var latestLog = (await authenticationLogRepository.GetAll())
+                            .OrderBy(x => x.CreatedAt)
+                            .First();
+
+            Assert.IsFalse(latestLog.Successful);
+        }
+
+        [TestMethod]
+        public async Task AuthenticationLogStatusOnSuccessTest()
+        {
+            var ipAddress = new IPAddress(0x00000);
+            var result = await authenticator.Authenticate("john", "pass", ipAddress);
+
+            var latestLog = (await authenticationLogRepository.GetAll())
+                            .OrderBy(x => x.CreatedAt)
+                            .First();
+
+            Assert.IsTrue(latestLog.Successful);
         }
 
         [TestMethod]
