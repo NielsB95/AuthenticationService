@@ -1,11 +1,12 @@
 import React from 'react';
 import Settings from '../settings';
 import ServerStatus from '../components/Dashboard/ServerStatus';
+import Dates from '../Util/Dates';
 
 class ServerConnection extends React.Component<{}, { status: string, timestamp: Date }> {
 
     intervalID: any;
-    statusInterval: number = 5000;
+    statusInterval: number = 25000;
 
     constructor(props: any) {
         super(props);
@@ -36,8 +37,19 @@ class ServerConnection extends React.Component<{}, { status: string, timestamp: 
     }
 
     render() {
+        let timestamp = this.state.timestamp;
+        let time = Dates.FormatTime(timestamp);
+        let seconds = timestamp.getSeconds();
+
+        // Prepend a 0 to make it 2 digit time.
+        time = `${time}:${seconds > 9 ? seconds : '0' + seconds}`;
+
         return (
-            <ServerStatus status={this.state.status} timestamp={this.state.timestamp} />
+            <div style={{ width: '100%', height: '100%', textAlign: 'center' }} >
+                <ServerStatus status={this.state.status} timestamp={this.state.timestamp} />
+                <br />
+                <span style={{ height: '20%' }}>{time}</span>
+            </div>
         );
     }
 
@@ -48,7 +60,7 @@ class ServerConnection extends React.Component<{}, { status: string, timestamp: 
                 status,
                 timestamp: new Date()
             }))
-            .catch(() => this.setState({ status: 'unhealthy' }));
+            .catch(() => this.setState({ status: 'Unhealthy' }));
     }
 }
 
