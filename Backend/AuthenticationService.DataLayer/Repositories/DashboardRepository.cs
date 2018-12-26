@@ -37,6 +37,48 @@ namespace AuthenticationService.DataLayer.Repositories
                           }).ToAsyncEnumerable().ToList();
         }
 
+        public async Task<IList<DateValuePair>> GetSuccesfulAuthenticationActivityLastDays(int days)
+        {
+            if (days <= 0)
+                throw new ArgumentException("Days cannot be negative", nameof(days));
+
+            var start = DateTime.Today.AddDays(-days);
+            var end = DateTime.Today;
+            var dates = DateTimeUtil.Range(start, end);
+
+            return await (from date in dates
+                          let activity = (from log in context.AuthenticationLogs
+                                          where log.CreatedAt.Date == date
+                                          && log.Successful
+                                          select log).Count()
+                          select new DateValuePair()
+                          {
+                              Date = date,
+                              Value = activity
+                          }).ToAsyncEnumerable().ToList();
+        }
+
+        public async Task<IList<DateValuePair>> GetFailedAuthenticationActivityLastDays(int days)
+        {
+            if (days <= 0)
+                throw new ArgumentException("Days cannot be negative", nameof(days));
+
+            var start = DateTime.Today.AddDays(-days);
+            var end = DateTime.Today;
+            var dates = DateTimeUtil.Range(start, end);
+
+            return await (from date in dates
+                          let activity = (from log in context.AuthenticationLogs
+                                          where log.CreatedAt.Date == date
+                                          && !log.Successful
+                                          select log).Count()
+                          select new DateValuePair()
+                          {
+                              Date = date,
+                              Value = activity
+                          }).ToAsyncEnumerable().ToList();
+        }
+
         public async Task<IList<DateValuePair>> GetUsersFromLastDays(int days)
         {
             if (days <= 0)
