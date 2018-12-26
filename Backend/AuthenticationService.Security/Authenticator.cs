@@ -35,23 +35,35 @@ namespace AuthenticationService.Security
 
             // There is no one in our database with this username.
             if (user == null)
+            {
+                await CreateAuthenticationLog(null, false);
                 return string.Empty;
+            }
 
             var success = passwordHashing.Compare(user, password);
 
             // .. also return an empty string if the password didn't match.
             if (!success)
+            {
+                await CreateAuthenticationLog(user, false);
                 return string.Empty;
+            }
 
             // .. add a new logentiry to the authenticationlog.
-            await authenticationLogRepository.Add(new AuthenticationLog()
-            {
-                CreatedAt = DateTime.Now,
-                User = user
-            });
+            await CreateAuthenticationLog(user);
 
             var token = tokenGenerator.GenerateToken(user, ipAddress);
             return token;
+        }
+
+        private async Task CreateAuthenticationLog(User user, bool succesful = true)
+        {
+            await authenticationLogRepository.Add(new AuthenticationLog()
+            {
+                CreatedAt = DateTime.Now,
+                User = user,
+                Successful = succesful
+            });
         }
     }
 }
