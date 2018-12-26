@@ -17,10 +17,11 @@ class AuthenticationLogList extends React.Component<IAuthenticationLogList> {
         return (
             <MaterialTable
                 columns={[
+                    { title: 'Name', render: (row) => (row.user || {}).fullname },
                     { title: 'Succesful', field: 'successful', type: 'boolean' },
                     {
                         title: 'Created at', field: 'createdAt', render: (rowData) => {
-                            return (<span>{Dates.FormatDate(rowData.createdAt)}</span>)
+                            return (<span>{Dates.FormatDate(rowData.createdAt)} {Dates.FormatTime(new Date(rowData.createdAt))}</span>)
                         }
                     }
                 ]}
