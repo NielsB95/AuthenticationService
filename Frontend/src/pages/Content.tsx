@@ -7,6 +7,7 @@ import Dashboard from './Dashboard';
 import Applications from './Applications';
 import Login from './Login';
 import PrivateRoute from '../components/Authentication/PrivateRoute';
+import AuthenticationLogs from './AuthenticationLogs';
 
 class Content extends React.Component {
 
@@ -21,7 +22,8 @@ class Content extends React.Component {
                         <PrivateRoute path="/users" component={Users} />
                         <PrivateRoute path="/roles" component={Roles} />
                         <PrivateRoute path="/applications" component={Applications} />
-                        <PrivateRoute component={NotFound} />
+                        <PrivateRoute path="/logs" component={AuthenticationLogs} />
+                        <Route component={NotFound} />
                     </Switch>
                 </div>
             </div>
