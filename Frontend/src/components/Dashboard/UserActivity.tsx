@@ -1,5 +1,5 @@
 import React from 'react';
-import DateTimeValueChart from '../charts/DateTimeValueChart';
+import { DateTimeValueChart } from '../charts/DateTimeValueChart';
 import Settings from '../../settings';
 import { GetJson } from '../../Util/Requests';
 
@@ -20,7 +20,7 @@ class UserActivity extends React.Component<{}, { data: any[] }> {
 
     render() {
         return (
-            <DateTimeValueChart data={this.state.data} />
+            <DateTimeValueChart lineProps={[{ key: 'value' }]} data={this.state.data} />
         )
     }
 

@@ -7,8 +7,14 @@ interface IThemable {
     theme: Theme
 }
 
+export interface ILineProperties {
+    key: string,
+    color?: string
+}
+
 interface IDateTimeValueChart extends IThemable {
-    data: any[]
+    data: any[],
+    lineProps: ILineProperties[]
 }
 
 class DateTimeValueChart extends React.Component<IDateTimeValueChart> {
@@ -25,10 +31,17 @@ class DateTimeValueChart extends React.Component<IDateTimeValueChart> {
         // Format the date
         this.props.data.map(x => x.date = Dates.FormatDate(x.date));
         this.iteration++;
+
+        let lines: any[] = [];
+        this.props.lineProps.map(lineProp => {
+            let color = lineProp.color || primary;
+            lines.push(<Line type="monotone" dataKey={lineProp.key} key={lineProp.key} stroke={color} />)
+        });
+
         return (
             <ResponsiveContainer>
                 <LineChart key={this.iteration} data={this.props.data} margin={{ top: 15, right: 60, bottom: 5, left: 0 }}>
-                    <Line type="monotone" dataKey="value" stroke={primary} />
+                    {lines}
                     <XAxis dataKey="date" />
                     <YAxis />
                     <Tooltip labelStyle={textStyling} itemStyle={textStyling} />
@@ -38,4 +51,5 @@ class DateTimeValueChart extends React.Component<IDateTimeValueChart> {
     }
 }
 
-export default withTheme()(DateTimeValueChart);
+let exportableDateTimeValueChart = withTheme()(DateTimeValueChart);
+export { exportableDateTimeValueChart as DateTimeValueChart };

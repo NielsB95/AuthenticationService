@@ -1,5 +1,5 @@
 import React from 'react'
-import DateTimeValueChart from '../charts/DateTimeValueChart';
+import { DateTimeValueChart } from '../charts/DateTimeValueChart';
 import Settings from '../../settings';
 import { GetJson } from '../../Util/Requests';
 
@@ -18,7 +18,7 @@ class NumberOfUsers extends React.Component<{}, { data: [] }> {
 
     render() {
         return (
-            <DateTimeValueChart data={this.state.data} />
+            <DateTimeValueChart lineProps={[{ key: 'value' }]} data={this.state.data} />
         )
     }
 }

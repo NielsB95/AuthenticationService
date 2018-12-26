@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import NumberOfUsers from '../components/Dashboard/NumberOfUsers';
 import UserActivity from '../components/Dashboard/UserActivity';
 import ServerConnection from '../dataComponents/ServerConnection';
+import SuccessFailRatio from '../components/Dashboard/SuccessFailRatio';
 
 const styles = (theme: any) => ({
     root: {
@@ -53,6 +54,24 @@ class Dashboard extends React.Component<{ classes: any }> {
                     </Paper>
                     <Paper className={classes.paper}>
                         <UserActivity />
+                    </Paper>
+                </Grid>
+
+                <Grid item xs={12} md={6}>
+                    <Paper className={classes.paperHeader}>
+                        <h3 style={{ margin: 0 }}>Succesfull vs. failed</h3>
+                    </Paper>
+                    <Paper className={classes.paper}>
+                        <SuccessFailRatio />
+                    </Paper>
+                </Grid>
+
+                <Grid item xs={12} md={6}>
+                    <Paper className={classes.paperHeader}>
+                        <h3 style={{ margin: 0 }}>Activity per application</h3>
+                    </Paper>
+                    <Paper className={classes.paper}>
+                        <SuccessFailRatio />
                     </Paper>
                 </Grid>
             </Grid >
