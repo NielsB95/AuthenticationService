@@ -12,4 +12,6 @@ Frontend
 ------------
 The frontend of this authentication service provides the administartors of an application with the tools to manage their users. Users, roles and permissions can be created, altered and be revoked. Besides providing the tools to manage the users, this applications also provides usefull insights. The dashboard shows among others, the total number of accounts and the number of succesfull authentications on a daily basis.
 
+Example usage
+------------
 ![Authentication service](https://drive.google.com/uc?export=view&id=1Cr9uoS7glH_Zll-iH7NjO6lgzRxnOU1a)
