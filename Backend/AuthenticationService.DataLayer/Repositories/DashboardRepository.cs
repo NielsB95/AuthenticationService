@@ -26,15 +26,17 @@ namespace AuthenticationService.DataLayer.Repositories
             var end = DateTime.Today;
             var dates = DateTimeUtil.Range(start, end);
 
-            return await (from date in dates
-                          let activity = (from log in context.AuthenticationLogs
-                                          where log.CreatedAt.Date == date
-                                          select log).Count()
-                          select new DateValuePair()
-                          {
-                              Date = date,
-                              Value = activity
-                          }).ToAsyncEnumerable().ToList();
+            var query = (from date in dates
+                         let activity = (from log in context.AuthenticationLogs
+                                         where log.CreatedAt.Date == date
+                                         select log).Count()
+                         select new DateValuePair()
+                         {
+                             Date = date,
+                             Value = activity
+                         }).ToAsyncEnumerable();
+
+            return await query.ToList();
         }
 
         public async Task<IList<DateValuePair>> GetSuccesfulAuthenticationActivityLastDays(int days)
@@ -46,16 +48,18 @@ namespace AuthenticationService.DataLayer.Repositories
             var end = DateTime.Today;
             var dates = DateTimeUtil.Range(start, end);
 
-            return await (from date in dates
-                          let activity = (from log in context.AuthenticationLogs
-                                          where log.CreatedAt.Date == date
-                                          && log.Successful
-                                          select log).Count()
-                          select new DateValuePair()
-                          {
-                              Date = date,
-                              Value = activity
-                          }).ToAsyncEnumerable().ToList();
+            var query = (from date in dates
+                         let activity = (from log in context.AuthenticationLogs
+                                         where log.CreatedAt.Date == date
+                                         && log.Successful
+                                         select log).Count()
+                         select new DateValuePair()
+                         {
+                             Date = date,
+                             Value = activity
+                         }).ToAsyncEnumerable();
+
+            return await query.ToList();
         }
 
         public async Task<IList<DateValuePair>> GetFailedAuthenticationActivityLastDays(int days)
@@ -67,16 +71,18 @@ namespace AuthenticationService.DataLayer.Repositories
             var end = DateTime.Today;
             var dates = DateTimeUtil.Range(start, end);
 
-            return await (from date in dates
-                          let activity = (from log in context.AuthenticationLogs
-                                          where log.CreatedAt.Date == date
-                                          && !log.Successful
-                                          select log).Count()
-                          select new DateValuePair()
-                          {
-                              Date = date,
-                              Value = activity
-                          }).ToAsyncEnumerable().ToList();
+            var query = (from date in dates
+                         let activity = (from log in context.AuthenticationLogs
+                                         where log.CreatedAt.Date == date
+                                         && !log.Successful
+                                         select log).Count()
+                         select new DateValuePair()
+                         {
+                             Date = date,
+                             Value = activity
+                         }).ToAsyncEnumerable();
+
+            return await query.ToList();
         }
 
         public async Task<IList<DateValuePair>> GetUsersFromLastDays(int days)
@@ -88,17 +94,19 @@ namespace AuthenticationService.DataLayer.Repositories
             var end = DateTime.Today;
             var dates = DateTimeUtil.Range(start, end);
 
-            return await (from date in dates
-                          let sumUsers = (from user in context.Users
-                                          where user.CreatedAt.Date <= date
-                                          select user).Count()
+            var query = (from date in dates
+                         let sumUsers = (from user in context.Users
+                                         where user.CreatedAt.Date <= date
+                                         select user).Count()
 
-                          select new DateValuePair()
-                          {
-                              Date = date,
-                              Value = sumUsers,
+                         select new DateValuePair()
+                         {
+                             Date = date,
+                             Value = sumUsers,
 
-                          }).ToAsyncEnumerable().ToList();
+                         }).ToAsyncEnumerable();
+
+            return await query.ToList();
         }
 
     }
