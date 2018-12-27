@@ -59,7 +59,7 @@ class Dashboard extends React.Component<{ classes: any }> {
 
                 <Grid item xs={12} md={6}>
                     <Paper className={classes.paperHeader}>
-                        <h3 style={{ margin: 0 }}>Succesfull vs. failed</h3>
+                        <h3 style={{ margin: 0 }}>Successfull vs. failed</h3>
                     </Paper>
                     <Paper className={classes.paper}>
                         <SuccessFailRatio />
