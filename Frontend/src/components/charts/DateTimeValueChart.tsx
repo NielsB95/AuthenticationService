@@ -1,7 +1,8 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import Dates from '../../Util/Dates';
-import { withTheme, Theme } from '@material-ui/core';
+import { withTheme, Theme, CircularProgress } from '@material-ui/core';
+import LoadingIcon from '../LoadingIcon';
 
 interface IThemable {
     theme: Theme
@@ -14,7 +15,8 @@ export interface ILineProperties {
 
 interface IDateTimeValueChart extends IThemable {
     data: any[],
-    lineProps: ILineProperties[]
+    lineProps: ILineProperties[],
+    loading?: boolean
 }
 
 class DateTimeValueChart extends React.Component<IDateTimeValueChart> {
@@ -38,16 +40,21 @@ class DateTimeValueChart extends React.Component<IDateTimeValueChart> {
             lines.push(<Line type="monotone" dataKey={lineProp.key} key={lineProp.key} stroke={color} />)
         });
 
-        return (
-            <ResponsiveContainer>
-                <LineChart key={this.iteration} data={this.props.data} margin={{ top: 15, right: 60, bottom: 5, left: 0 }}>
-                    {lines}
-                    <XAxis dataKey="date" />
-                    <YAxis />
-                    <Tooltip labelStyle={textStyling} itemStyle={textStyling} />
-                </LineChart>
-            </ResponsiveContainer>
-        )
+        return this.props.loading ?
+            (
+                <LoadingIcon />
+            )
+            :
+            (
+                <ResponsiveContainer>
+                    <LineChart key={this.iteration} data={this.props.data} margin={{ top: 15, right: 60, bottom: 5, left: 0 }}>
+                        {lines}
+                        <XAxis dataKey="date" />
+                        <YAxis />
+                        <Tooltip labelStyle={textStyling} itemStyle={textStyling} />
+                    </LineChart>
+                </ResponsiveContainer>
+            )
     }
 }
 

@@ -32,7 +32,7 @@ class Dashboard extends React.Component<{ classes: any }> {
             <Grid container spacing={16} justify="flex-start">
                 <Grid item xs={12} md={2}>
                     <Paper className={classes.paperHeader}>
-                        <h3 style={{ margin: 0 }}>Server connection</h3>
+                        <h3 style={{ margin: 0 }}>Connection</h3>
                     </Paper>
                     <Paper className={classes.paper}>
                         <ServerConnection />

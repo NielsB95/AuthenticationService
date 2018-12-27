@@ -6,7 +6,6 @@ import { Icon } from '@material-ui/core';
 
 class ServerStatus extends React.Component<{ status: string, timestamp: Date }> {
     render() {
-        const timestamp = this.props.timestamp;
         const styles: React.CSSProperties = {
             height: '80%',
             width: '45%',

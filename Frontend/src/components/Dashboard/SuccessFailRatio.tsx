@@ -2,19 +2,21 @@ import React from 'react';
 import { DateTimeValueChart, ILineProperties } from '../charts/DateTimeValueChart';
 import { GetJson } from '../../Util/Requests';
 import Settings from '../../settings';
-import { Promise } from 'q';
+import { Promise } from 'bluebird';
 
-class SuccessFailRatio extends React.Component<{}, { data: object[] }> {
+class SuccessFailRatio extends React.Component<{}, { data: object[], loading: boolean }> {
 
     constructor(props: object) {
         super(props);
         this.state = {
-            data: []
+            data: [],
+            loading: false
         }
     }
 
     componentWillMount() {
-        GetJson(`${Settings.BackendUrl}Dashboard/SuccesfulAuthenticationActivityLastDays`)
+        this.setState({ loading: true });
+        let succesful = GetJson(`${Settings.BackendUrl}Dashboard/SuccesfulAuthenticationActivityLastDays`)
             .then(data => {
                 data.forEach((d: any) => {
                     d.succesful = d.value;
@@ -23,7 +25,7 @@ class SuccessFailRatio extends React.Component<{}, { data: object[] }> {
                 this.setState({ data: this.handleData(data) })
             });
 
-        GetJson(`${Settings.BackendUrl}Dashboard/FailedAuthenticationActivityLastDays`)
+        let failed = GetJson(`${Settings.BackendUrl}Dashboard/FailedAuthenticationActivityLastDays`)
             .then(data => {
                 data.forEach((d: any) => {
                     d.failed = d.value;
@@ -31,6 +33,10 @@ class SuccessFailRatio extends React.Component<{}, { data: object[] }> {
                 });
                 this.setState({ data: this.handleData(data) })
             });
+
+        // Wait for both requests to be finished.
+        Promise.all([succesful, failed])
+            .then(() => this.setState({ loading: false }));
     }
 
     handleData(newData: object[]): object[] {
@@ -49,7 +55,7 @@ class SuccessFailRatio extends React.Component<{}, { data: object[] }> {
             color: '#FF0000'
         }];
 
-        return <DateTimeValueChart lineProps={keyValues} data={this.state.data} />
+        return <DateTimeValueChart lineProps={keyValues} loading={this.state.loading} data={this.state.data} />
     }
 }
 export default SuccessFailRatio;
