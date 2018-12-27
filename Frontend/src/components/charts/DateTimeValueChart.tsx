@@ -54,7 +54,7 @@ class DateTimeValueChart extends React.Component<IDateTimeValueChart> {
                         <Tooltip labelStyle={textStyling} itemStyle={textStyling} />
                     </LineChart>
                 </ResponsiveContainer>
-            )
+            );
     }
 }
 
