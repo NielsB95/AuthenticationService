@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using AuthenticationService.BusinessLayer;
 using AuthenticationService.DataLayer.Context;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -92,6 +93,5 @@ namespace AuthenticationService.DataLayer
 
             return services;
         }
-
     }
 }
