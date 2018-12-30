@@ -14,14 +14,14 @@ class ApplicationList extends React.Component<IApplicationList> {
         return (
             <MaterialTable
                 columns={[
-                    { title: 'Name', field: 'name', }
+                    { title: 'Name', field: 'name' }
                 ]}
                 data={this.props.applications}
                 title='Applications'
                 options={{
                     showEmptyDataSourceMessage: true,
-                    pageSizeOptions: [5, 10, 15],
-                    pageSize: 10
+                    pageSizeOptions: [10],
+                    pageSize: 10,
                 }}
             />
         )

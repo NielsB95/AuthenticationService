@@ -27,8 +27,8 @@ class UserList extends React.Component<IUserList> {
                 title='Users'
                 options={{
                     showEmptyDataSourceMessage: true,
-                    pageSizeOptions: [5, 10, 15],
-                    pageSize: 10
+                    pageSizeOptions: [10],
+                    pageSize: 10,
                 }}
             />
         )

@@ -29,8 +29,8 @@ class AuthenticationLogList extends React.Component<IAuthenticationLogList> {
                 title='Logs'
                 options={{
                     showEmptyDataSourceMessage: true,
-                    pageSizeOptions: [5, 10, 15],
-                    pageSize: 10
+                    pageSizeOptions: [10],
+                    pageSize: 10,
                 }}
             />
         )

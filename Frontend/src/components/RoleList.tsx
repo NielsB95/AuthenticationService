@@ -20,8 +20,8 @@ class RoleList extends React.Component<IRoleList> {
                 title='Roles'
                 options={{
                     showEmptyDataSourceMessage: true,
-                    pageSizeOptions: [5, 10, 15],
-                    pageSize: 10
+                    pageSizeOptions: [10],
+                    pageSize: 10,
                 }}
             />
         )
