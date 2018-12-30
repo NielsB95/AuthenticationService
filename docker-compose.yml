@@ -2,7 +2,6 @@ version: '3.4'
 
 services:
   authenticationservice:
-    image: ${DOCKER_REGISTRY-}authenticationservice
     restart: always
     build:
       context: ./Backend
@@ -12,10 +11,7 @@ services:
     depends_on:
        - db
   frontend:
-    image: ${DOCKER_REGISTRY-}frontend
     restart: always
-    environment:
-      REACT_APP_SERVER_URL: "localhost:6000"
     build:
       context: ./Frontend
       dockerfile: Dockerfile
