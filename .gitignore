@@ -334,3 +334,6 @@ ASALocalRun/
 
 # Ingore setting files
 appsettings.json
+
+# We don't want our production settings to end up in production.
+.env.production
