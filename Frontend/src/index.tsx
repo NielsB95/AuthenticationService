@@ -6,4 +6,7 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(<Index />, document.querySelector('#root'));
 
-serviceWorker.register();
+serviceWorker.register({
+    onSuccess: () => { console.log("SW has been registered.") },
+    onUpdate: () => { console.log("SWS has been updated.") }
+});
