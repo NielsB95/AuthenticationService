@@ -16,18 +16,18 @@ namespace AuthenticationService.Security
 	public class Authenticator : IAuthenticator
 	{
 		private readonly IUserRepository userRepository;
-		private readonly IAuthenticationLogRepository authenticationLogRepository;
 		private readonly IApplicationUserRepository applicationUserRepository;
+		private readonly IAuthenticationLogger logger;
 		private readonly PasswordHashing passwordHashing;
 		private readonly TokenGenerator tokenGenerator;
 
-		public Authenticator(IUserRepository userRepository, IAuthenticationLogRepository authenticationLogRepository, IApplicationUserRepository applicationUserRepository, PasswordHashing passwordHashing, TokenGenerator tokenGenerator)
+		public Authenticator(IUserRepository userRepository, IApplicationUserRepository applicationUserRepository, IAuthenticationLogger logger, PasswordHashing passwordHashing, TokenGenerator tokenGenerator)
 		{
 			this.userRepository = userRepository;
-			this.authenticationLogRepository = authenticationLogRepository;
 			this.applicationUserRepository = applicationUserRepository;
 			this.passwordHashing = passwordHashing;
 			this.tokenGenerator = tokenGenerator;
+			this.logger = logger;
 		}
 
 		public async Task<string> Authenticate(string username, string password, Guid applicationCode, IPAddress ipAddress)
@@ -38,13 +38,12 @@ namespace AuthenticationService.Security
 			// There is no one in our database with this username.
 			if (user == null)
 			{
-				await CreateAuthenticationLog(null, applicationCode, false);
+				await logger.CreateLog(null, applicationCode, false);
 				return string.Empty;
 			}
 
 			// Check if the password is correct.
 			var success = passwordHashing.Compare(user, password);
-
 
 
 			// Check if the user has the rights for this applicaiton.
@@ -53,25 +52,15 @@ namespace AuthenticationService.Security
 			// .. also return an empty string if the password didn't match.
 			if (!success || !isApplicationAuthorized)
 			{
-				await CreateAuthenticationLog(user, applicationCode, false);
+				await logger.CreateLog(user, applicationCode, false);
 				return string.Empty;
 			}
 
 			// .. add a new logentiry to the authenticationlog.
-			await CreateAuthenticationLog(user, applicationCode);
+			await logger.CreateLog(user, applicationCode);
 
 			var token = tokenGenerator.GenerateToken(user, applicationCode, ipAddress);
 			return token;
-		}
-
-		private async Task CreateAuthenticationLog(User user, Guid applicationCode, bool succesful = true)
-		{
-			await authenticationLogRepository.Add(new AuthenticationLog()
-			{
-				CreatedAt = DateTime.Now,
-				User = user,
-				Successful = succesful
-			});
 		}
 	}
 }

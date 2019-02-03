@@ -20,8 +20,10 @@ namespace AuthenticationService.Security.Tests
 	{
 		private AuthenticationServiceContext context;
 		private IUserRepository userRepository;
-		private IAuthenticationLogRepository authenticationLogRepository;
+		private IAuthenticationLogger logger;
 		private IApplicationUserRepository applicationUserRepository;
+		private IAuthenticationLogRepository authenticationLogRepository;
+		private IApplicationRepository applicationRepository;
 		private PasswordHashing passwordHashing;
 		private TokenGenerator tokenGenerator;
 		private IConfiguration configuration;
@@ -69,16 +71,20 @@ namespace AuthenticationService.Security.Tests
 			context.SaveChanges();
 
 			userRepository = new UserRepository(context);
-			authenticationLogRepository = new AuthenticationLogRepository(context);
+
 			applicationUserRepository = new ApplicationUserRepository(context);
 			passwordHashing = new PasswordHashing();
+			authenticationLogRepository = new AuthenticationLogRepository(context);
+			applicationRepository = new ApplicationRepository(context);
+
+			logger = new AuthenticationLogger(authenticationLogRepository, applicationRepository);
 
 			var configMock = new Mock<IConfiguration>();
 			configMock.Setup(x => x["Secret"]).Returns("2OzslhneIrPaTS/T5MY3ZU4oOjE2hYGsNJJ6fuKEKoP/blm9acKUzR/vEAVstkKwetZJzU3OSf2b5zsllxDwyA==");
 			configuration = configMock.Object;
 			tokenGenerator = new TokenGenerator(configuration);
 
-			authenticator = new Authenticator(userRepository, authenticationLogRepository, applicationUserRepository, passwordHashing, tokenGenerator);
+			authenticator = new Authenticator(userRepository, applicationUserRepository, logger, passwordHashing, tokenGenerator);
 		}
 
 		[TestMethod]

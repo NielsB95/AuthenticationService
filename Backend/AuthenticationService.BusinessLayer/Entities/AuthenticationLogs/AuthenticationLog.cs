@@ -1,4 +1,5 @@
-﻿using AuthenticationService.BusinessLayer.Entities.Users;
+﻿using AuthenticationService.BusinessLayer.Entities.Applications;
+using AuthenticationService.BusinessLayer.Entities.Users;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,7 +16,8 @@ namespace AuthenticationService.BusinessLayer.Entities.AuthenticationLogs
 
 		public bool Successful { get; set; }
 
-		public Guid ApplicationCode { get; set; }
+		[ForeignKey(nameof(Application))]
+		public Guid ApplicationID { get; set; }
 
 		[Required]
 		public DateTime CreatedAt { get; set; }
