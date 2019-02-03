@@ -16,7 +16,6 @@ namespace AuthenticationService.BusinessLayer.Entities.Applications
         [Required]
         public string Name { get; set; }
 
-
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid ApplicationCode { get; set; }
