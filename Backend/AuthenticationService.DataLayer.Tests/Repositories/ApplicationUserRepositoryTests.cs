@@ -47,5 +47,14 @@ namespace AuthenticationService.DataLayer.Tests.Repositories
 			var isAuthorized = await applicationUserRepository.IsAuthorized(userid, applicationCode2);
 			Assert.IsFalse(isAuthorized);
 		}
+
+		[TestCleanup]
+		public void Cleanup()
+		{
+			context.RemoveRange(context.Users);
+			context.RemoveRange(context.Applications);
+			context.RemoveRange(context.ApplicationUsers);
+			context.SaveChanges();
+		}
 	}
 }

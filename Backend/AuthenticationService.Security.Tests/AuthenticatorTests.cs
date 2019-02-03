@@ -1,4 +1,5 @@
-﻿using AuthenticationService.BusinessLayer.Entities.AuthenticationLogs;
+﻿using AuthenticationService.BusinessLayer.Entities.Applications;
+using AuthenticationService.BusinessLayer.Entities.AuthenticationLogs;
 using AuthenticationService.BusinessLayer.Entities.Roles;
 using AuthenticationService.BusinessLayer.Entities.Users;
 using AuthenticationService.DataLayer.Context;
@@ -20,13 +21,17 @@ namespace AuthenticationService.Security.Tests
 		private AuthenticationServiceContext context;
 		private IUserRepository userRepository;
 		private IAuthenticationLogRepository authenticationLogRepository;
+		private IApplicationUserRepository applicationUserRepository;
 		private PasswordHashing passwordHashing;
 		private TokenGenerator tokenGenerator;
 		private IConfiguration configuration;
 
 		private Authenticator authenticator;
 
-		private string applicationCode = new Guid().ToString();
+		private string applicationCode = Guid.NewGuid().ToString();
+		private Guid applicationID = Guid.NewGuid();
+		private Guid johnID = Guid.NewGuid();
+		private Guid janeID = Guid.NewGuid();
 
 		[TestInitialize]
 		public void Initialize()
@@ -41,6 +46,7 @@ namespace AuthenticationService.Security.Tests
 
 			context.Add(new User()
 			{
+				ID = johnID,
 				Username = "john",
 				Lastname = "Joe",
 				Password = "+Y0VT7pj7C7vvMUsmBBaaGHoCvrSrO6hUWglzbec7Ag=",
@@ -49,16 +55,22 @@ namespace AuthenticationService.Security.Tests
 			});
 			context.Add(new User()
 			{
+				ID = janeID,
 				Username = "Jane",
 				Lastname = "",
-				Password = "pass",
+				Password = "+Y0VT7pj7C7vvMUsmBBaaGHoCvrSrO6hUWglzbec7Ag=",
 				CreatedAt = new DateTime(2018, 12, 23),
 				Role = admin
 			});
+
+			context.Add(new Application() { ID = applicationID, Name = "Authentication service", ApplicationCode = Guid.Parse(applicationCode) });
+			context.Add(new ApplicationUser() { ApplicationID = applicationID, UserID = johnID });
+
 			context.SaveChanges();
 
 			userRepository = new UserRepository(context);
 			authenticationLogRepository = new AuthenticationLogRepository(context);
+			applicationUserRepository = new ApplicationUserRepository(context);
 			passwordHashing = new PasswordHashing();
 
 			var configMock = new Mock<IConfiguration>();
@@ -66,7 +78,7 @@ namespace AuthenticationService.Security.Tests
 			configuration = configMock.Object;
 			tokenGenerator = new TokenGenerator(configuration);
 
-			authenticator = new Authenticator(userRepository, authenticationLogRepository, passwordHashing, tokenGenerator);
+			authenticator = new Authenticator(userRepository, authenticationLogRepository, applicationUserRepository, passwordHashing, tokenGenerator);
 		}
 
 		[TestMethod]
@@ -76,6 +88,16 @@ namespace AuthenticationService.Security.Tests
 			var result = await authenticator.Authenticate("john", "pass", applicationCode, ipAddress);
 
 			Assert.AreNotEqual("", result);
+			Assert.IsNotNull(result);
+		}
+
+		[TestMethod]
+		public async Task ApplicationCodeTest()
+		{
+			var ipAddress = new IPAddress(0x00000);
+			var result = await authenticator.Authenticate("jane", "pass", applicationCode, ipAddress);
+
+			Assert.AreEqual("", result);
 			Assert.IsNotNull(result);
 		}
 
@@ -191,7 +213,7 @@ namespace AuthenticationService.Security.Tests
 		[ExpectedException(typeof(ArgumentNullException))]
 		public void GenerateTokenNUllUserTest()
 		{
-			tokenGenerator.GenerateToken(null, null);
+			tokenGenerator.GenerateToken(null, null, null);
 		}
 
 		[TestCleanup]

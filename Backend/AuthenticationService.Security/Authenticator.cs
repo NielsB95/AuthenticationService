@@ -1,4 +1,5 @@
-﻿using AuthenticationService.BusinessLayer.Entities.AuthenticationLogs;
+﻿using AuthenticationService.BusinessLayer.Entities.Applications;
+using AuthenticationService.BusinessLayer.Entities.AuthenticationLogs;
 using AuthenticationService.BusinessLayer.Entities.Users;
 using AuthenticationService.Security.Tokens;
 using System;
@@ -16,19 +17,20 @@ namespace AuthenticationService.Security
 	{
 		private readonly IUserRepository userRepository;
 		private readonly IAuthenticationLogRepository authenticationLogRepository;
+		private readonly IApplicationUserRepository applicationUserRepository;
 		private readonly PasswordHashing passwordHashing;
 		private readonly TokenGenerator tokenGenerator;
 
-
-		public Authenticator(IUserRepository userRepository, IAuthenticationLogRepository authenticationLogRepository, PasswordHashing passwordHashing, TokenGenerator tokenGenerator)
+		public Authenticator(IUserRepository userRepository, IAuthenticationLogRepository authenticationLogRepository, IApplicationUserRepository applicationUserRepository, PasswordHashing passwordHashing, TokenGenerator tokenGenerator)
 		{
 			this.userRepository = userRepository;
 			this.authenticationLogRepository = authenticationLogRepository;
+			this.applicationUserRepository = applicationUserRepository;
 			this.passwordHashing = passwordHashing;
 			this.tokenGenerator = tokenGenerator;
 		}
 
-		public async Task<string> Authenticate(string username, string password, string applicationcode, IPAddress ipAddress)
+		public async Task<string> Authenticate(string username, string password, string applicationCode, IPAddress ipAddress)
 		{
 			// Get the user that matches the username.
 			var user = await userRepository.GetByUsername(username);
@@ -40,7 +42,17 @@ namespace AuthenticationService.Security
 				return string.Empty;
 			}
 
+			// Check if the password is correct.
 			var success = passwordHashing.Compare(user, password);
+
+			var parsedApplicationCode = Guid.Parse(applicationCode);
+			if (parsedApplicationCode == Guid.Empty)
+				throw new ArgumentException("Failed to format '{0}' as Guid", applicationCode);
+
+			// Check if the user has the rights for this applicaiton.
+			var isApplicationAuthorized = await this.applicationUserRepository.IsAuthorized(user.ID, parsedApplicationCode);
+			if (!isApplicationAuthorized)
+				return string.Empty;
 
 			// .. also return an empty string if the password didn't match.
 			if (!success)
@@ -52,7 +64,7 @@ namespace AuthenticationService.Security
 			// .. add a new logentiry to the authenticationlog.
 			await CreateAuthenticationLog(user);
 
-			var token = tokenGenerator.GenerateToken(user, ipAddress);
+			var token = tokenGenerator.GenerateToken(user, applicationCode, ipAddress);
 			return token;
 		}
 
