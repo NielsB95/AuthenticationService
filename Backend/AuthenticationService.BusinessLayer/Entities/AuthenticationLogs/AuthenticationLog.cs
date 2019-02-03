@@ -21,5 +21,7 @@ namespace AuthenticationService.BusinessLayer.Entities.AuthenticationLogs
 
 		[Required]
 		public DateTime CreatedAt { get; set; }
+
+		public virtual Application Application { get; set; }
 	}
 }
