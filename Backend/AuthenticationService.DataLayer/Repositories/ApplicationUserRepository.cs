@@ -19,8 +19,13 @@ namespace AuthenticationService.DataLayer.Repositories
 				.FirstOrDefault();
 
 			if (application == null)
-				throw new ArgumentException(string.Format("There is not application with applicationcode {0}", applicationCode));
-
+			{
+#if DEBUG
+				throw new ArgumentException(string.Format("There is no application with application code {0}", applicationCode));
+#else
+				return false;
+#endif
+			}
 
 			return await context.ApplicationUsers
 				.Where(x => x.UserID == userid)

@@ -23,7 +23,8 @@ class AuthenticationLogList extends React.Component<IAuthenticationLogList> {
                         title: 'Created at', field: 'createdAt', render: (rowData) => {
                             return (<span>{Dates.FormatDate(rowData.createdAt)} {Dates.FormatTime(new Date(rowData.createdAt))}</span>)
                         }
-                    }
+                    },
+                    { title: 'Application', render: (row) => (row.application || {}).name }
                 ]}
                 data={this.props.logs}
                 title='Logs'
