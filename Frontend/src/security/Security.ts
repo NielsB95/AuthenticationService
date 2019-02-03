@@ -17,7 +17,6 @@ let LogIn = async (username: string, password: string) => {
     let data = new URLSearchParams();
     data.append("username", username);
     data.append("password", password);
-    console.log(Settings.ApplicationCode);
     data.append("applicationcode", Settings.ApplicationCode);
 
     return fetch(`${Settings.BackendUrl}Authenticate`, {
@@ -26,10 +25,10 @@ let LogIn = async (username: string, password: string) => {
     })
         .then(response => {
             if (response.status === 401)
-                throw new Error("Unauthorized!!");
+                throw new Error("401 - Unauthorized!!");
 
             if (response.status === 500)
-                throw new Error("Something went wrong!");
+                throw new Error("500 - Something went wrong!");
             return response.json();
         })
         .then(responseData => {
