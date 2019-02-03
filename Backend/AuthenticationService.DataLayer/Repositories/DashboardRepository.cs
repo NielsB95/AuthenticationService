@@ -8,106 +8,133 @@ using AuthenticationService.DataLayer.Util;
 
 namespace AuthenticationService.DataLayer.Repositories
 {
-    public class DashboardRepository : IDashboardRepository
-    {
-        private AuthenticationServiceContext context;
+	public class DashboardRepository : IDashboardRepository
+	{
+		private AuthenticationServiceContext context;
 
-        public DashboardRepository(AuthenticationServiceContext context)
-        {
-            this.context = context;
-        }
+		public DashboardRepository(AuthenticationServiceContext context)
+		{
+			this.context = context;
+		}
 
-        public async Task<IList<DateValuePair>> GetUserActivityLastDays(int days)
-        {
-            if (days <= 0)
-                throw new ArgumentException("Days cannot be negative", nameof(days));
+		public async Task<IList<DateValuePair>> GetUserActivityLastDays(int days)
+		{
+			if (days <= 0)
+				throw new ArgumentException("Days cannot be negative", nameof(days));
 
-            var start = DateTime.Today.AddDays(-days);
-            var end = DateTime.Today;
-            var dates = DateTimeUtil.Range(start, end);
+			var start = DateTime.Today.AddDays(-days);
+			var end = DateTime.Today;
+			var dates = DateTimeUtil.Range(start, end);
 
-            var query = (from date in dates
-                         let activity = (from log in context.AuthenticationLogs
-                                         where log.CreatedAt.Date == date
-                                         select log).Count()
-                         select new DateValuePair()
-                         {
-                             Date = date,
-                             Value = activity
-                         }).ToAsyncEnumerable();
+			var queryResult = await context.AuthenticationLogs
+				.Where(x => x.CreatedAt >= start)
+				.GroupBy(x => x.CreatedAt.Date)
+				.Select(x => new DateValuePair()
+				{
+					Value = x.Count(),
+					Date = x.Key
+				})
+				.ToAsyncEnumerable()
+				.ToList();
 
-            return await query.ToList();
-        }
+			// Add the missing days (only needed when value is 0)
+			foreach (var day in dates)
+				if (!queryResult.Select(x => x.Date).Contains(day))
+					queryResult.Add(new DateValuePair() { Date = day, Value = 0 });
 
-        public async Task<IList<DateValuePair>> GetSuccesfulAuthenticationActivityLastDays(int days)
-        {
-            if (days <= 0)
-                throw new ArgumentException("Days cannot be negative", nameof(days));
+			// Order the results.
+			return queryResult
+				.OrderBy(x => x.Date)
+				.ToList();
+		}
 
-            var start = DateTime.Today.AddDays(-days);
-            var end = DateTime.Today;
-            var dates = DateTimeUtil.Range(start, end);
+		public async Task<IList<DateValuePair>> GetSuccesfulAuthenticationActivityLastDays(int days)
+		{
+			if (days <= 0)
+				throw new ArgumentException("Days cannot be negative", nameof(days));
 
-            var query = (from date in dates
-                         let activity = (from log in context.AuthenticationLogs
-                                         where log.CreatedAt.Date == date
-                                         && log.Successful
-                                         select log).Count()
-                         select new DateValuePair()
-                         {
-                             Date = date,
-                             Value = activity
-                         }).ToAsyncEnumerable();
+			var start = DateTime.Today.AddDays(-days);
+			var end = DateTime.Today;
+			var dates = DateTimeUtil.Range(start, end);
 
-            return await query.ToList();
-        }
+			var queryResult = await context.AuthenticationLogs
+				.Where(x => x.CreatedAt >= start)
+				.Where(x => x.Successful)
+				.GroupBy(x => x.CreatedAt.Date)
+				.Select(x => new DateValuePair()
+				{
+					Value = x.Count(),
+					Date = x.Key
+				})
+				.ToAsyncEnumerable()
+				.ToList();
 
-        public async Task<IList<DateValuePair>> GetFailedAuthenticationActivityLastDays(int days)
-        {
-            if (days <= 0)
-                throw new ArgumentException("Days cannot be negative", nameof(days));
+			// Add the missing days (only needed when value is 0)
+			foreach (var day in dates)
+				if (!queryResult.Select(x => x.Date).Contains(day))
+					queryResult.Add(new DateValuePair() { Date = day, Value = 0 });
 
-            var start = DateTime.Today.AddDays(-days);
-            var end = DateTime.Today;
-            var dates = DateTimeUtil.Range(start, end);
+			// Order the results.
+			return queryResult
+				.OrderBy(x => x.Date)
+				.ToList();
+		}
 
-            var query = (from date in dates
-                         let activity = (from log in context.AuthenticationLogs
-                                         where log.CreatedAt.Date == date
-                                         && !log.Successful
-                                         select log).Count()
-                         select new DateValuePair()
-                         {
-                             Date = date,
-                             Value = activity
-                         }).ToAsyncEnumerable();
+		public async Task<IList<DateValuePair>> GetFailedAuthenticationActivityLastDays(int days)
+		{
+			if (days <= 0)
+				throw new ArgumentException("Days cannot be negative", nameof(days));
 
-            return await query.ToList();
-        }
+			var start = DateTime.Today.AddDays(-days);
+			var end = DateTime.Today;
+			var dates = DateTimeUtil.Range(start, end);
 
-        public async Task<IList<DateValuePair>> GetUsersFromLastDays(int days)
-        {
-            if (days <= 0)
-                throw new ArgumentException("Days cannot be negative", nameof(days));
+			var queryResult = await context.AuthenticationLogs
+				.Where(x => x.CreatedAt >= start)
+				.Where(x => !x.Successful)
+				.GroupBy(x => x.CreatedAt.Date)
+				.Select(x => new DateValuePair()
+				{
+					Value = x.Count(),
+					Date = x.Key
+				})
+				.ToAsyncEnumerable()
+				.ToList();
 
-            var start = DateTime.Today.AddDays(-days);
-            var end = DateTime.Today;
-            var dates = DateTimeUtil.Range(start, end);
+			// Add the missing days (only needed when value is 0)
+			foreach (var day in dates)
+				if (!queryResult.Select(x => x.Date).Contains(day))
+					queryResult.Add(new DateValuePair() { Date = day, Value = 0 });
 
-            var query = (from date in dates
-                         let sumUsers = (from user in context.Users
-                                         where user.CreatedAt.Date <= date
-                                         select user).Count()
+			// Order the results.
+			return queryResult
+				.OrderBy(x => x.Date)
+				.ToList();
+		}
 
-                         select new DateValuePair()
-                         {
-                             Date = date,
-                             Value = sumUsers,
+		public async Task<IList<DateValuePair>> GetUsersFromLastDays(int days)
+		{
+			if (days <= 0)
+				throw new ArgumentException("Days cannot be negative", nameof(days));
 
-                         }).ToAsyncEnumerable();
+			var start = DateTime.Today.AddDays(-days);
+			var end = DateTime.Today;
+			var dates = DateTimeUtil.Range(start, end);
 
-            return await query.ToList();
-        }
+			var query = (from date in dates
+						 let sumUsers = (from user in context.Users
+										 where user.CreatedAt.Date <= date
+										 select user).Count()
 
-    }
+						 select new DateValuePair()
+						 {
+							 Date = date,
+							 Value = sumUsers,
+
+						 }).ToAsyncEnumerable();
+
+			return await query.ToList();
+		}
+
+	}
 }
