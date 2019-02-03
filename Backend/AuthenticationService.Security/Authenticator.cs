@@ -51,11 +51,9 @@ namespace AuthenticationService.Security
 
 			// Check if the user has the rights for this applicaiton.
 			var isApplicationAuthorized = await this.applicationUserRepository.IsAuthorized(user.ID, parsedApplicationCode);
-			if (!isApplicationAuthorized)
-				return string.Empty;
 
 			// .. also return an empty string if the password didn't match.
-			if (!success)
+			if (!success || !isApplicationAuthorized)
 			{
 				await CreateAuthenticationLog(user, false);
 				return string.Empty;
