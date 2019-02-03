@@ -8,34 +8,35 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace AuthenticationService.Security
 {
-    public static class SecurityRegistration
-    {
-        public static IServiceCollection AddSecurity(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddScoped<IAuthenticator, Authenticator>();
-            services.AddScoped<PasswordHashing>();
-            services.AddScoped<TokenGenerator>();
+	public static class SecurityRegistration
+	{
+		public static IServiceCollection AddSecurity(this IServiceCollection services, IConfiguration configuration)
+		{
+			services.AddScoped<IAuthenticator, Authenticator>();
+			services.AddScoped<IAuthenticationLogger, AuthenticationLogger>();
+			services.AddScoped<PasswordHashing>();
+			services.AddScoped<TokenGenerator>();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateLifetime = true,
-                        ValidateAudience = false,
-                        ValidIssuer = "Authentication.Service",
-                        IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(configuration["Secret"]))
-                    };
-                });
+			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+				.AddJwtBearer(options =>
+				{
+					options.TokenValidationParameters = new TokenValidationParameters
+					{
+						ValidateIssuer = true,
+						ValidateLifetime = true,
+						ValidateAudience = false,
+						ValidIssuer = "Authentication.Service",
+						IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(configuration["Secret"]))
+					};
+				});
 
-            return services;
-        }
+			return services;
+		}
 
-        public static IApplicationBuilder UseSecurity(this IApplicationBuilder app)
-        {
-            app.UseAuthentication();
-            return app;
-        }
-    }
+		public static IApplicationBuilder UseSecurity(this IApplicationBuilder app)
+		{
+			app.UseAuthentication();
+			return app;
+		}
+	}
 }

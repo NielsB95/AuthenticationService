@@ -42,12 +42,12 @@ namespace AuthenticationService.BusinessLayer.Entities.Users
 		/// The role this user has accross all the applications.
 		/// </summary>
 		/// <value>The role.</value>
-		public Role Role { get; set; }
+		public virtual Role Role { get; set; }
 
 		/// <summary>
 		/// A list of applications this user is authorized for.
 		/// </summary>
 		/// <value>The applications.</value>
-		public IList<Application> Applications { get; set; }
+		public virtual IList<ApplicationUser> Applications { get; set; }
 	}
 }

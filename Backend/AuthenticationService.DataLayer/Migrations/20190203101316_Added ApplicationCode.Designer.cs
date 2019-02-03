@@ -3,15 +3,17 @@ using System;
 using AuthenticationService.DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AuthenticationService.DataLayer.Migrations
 {
     [DbContext(typeof(AuthenticationServiceContext))]
-    partial class AuthenticationServiceContextModelSnapshot : ModelSnapshot
+    [Migration("20190203101316_Added ApplicationCode")]
+    partial class AddedApplicationCode
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,36 +32,19 @@ namespace AuthenticationService.DataLayer.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
+                    b.Property<Guid?>("UserID");
+
                     b.HasKey("ID");
-
-                    b.HasIndex("ApplicationCode")
-                        .IsUnique();
-
-                    b.ToTable("Applications");
-                });
-
-            modelBuilder.Entity("AuthenticationService.BusinessLayer.Entities.Applications.ApplicationUser", b =>
-                {
-                    b.Property<Guid>("ApplicationID");
-
-                    b.Property<Guid>("UserID");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd();
-
-                    b.HasKey("ApplicationID", "UserID");
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("ApplicationUsers");
+                    b.ToTable("Applications");
                 });
 
             modelBuilder.Entity("AuthenticationService.BusinessLayer.Entities.AuthenticationLogs.AuthenticationLog", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<Guid>("ApplicationID");
 
                     b.Property<DateTime>("CreatedAt");
 
@@ -106,7 +91,7 @@ namespace AuthenticationService.DataLayer.Migrations
                     b.HasData(
                         new
                         {
-                            ID = new Guid("d9d77f1a-d803-4d15-bdd6-21d623291ed8"),
+                            ID = new Guid("fdedbb7b-cfc5-4765-8796-1d5da0139e05"),
                             Name = "Super admin"
                         });
                 });
@@ -140,17 +125,11 @@ namespace AuthenticationService.DataLayer.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("AuthenticationService.BusinessLayer.Entities.Applications.ApplicationUser", b =>
+            modelBuilder.Entity("AuthenticationService.BusinessLayer.Entities.Applications.Application", b =>
                 {
-                    b.HasOne("AuthenticationService.BusinessLayer.Entities.Applications.Application", "Application")
-                        .WithMany("ApplicationUsers")
-                        .HasForeignKey("ApplicationID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("AuthenticationService.BusinessLayer.Entities.Users.User", "User")
+                    b.HasOne("AuthenticationService.BusinessLayer.Entities.Users.User")
                         .WithMany("Applications")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserID");
                 });
 
             modelBuilder.Entity("AuthenticationService.BusinessLayer.Entities.AuthenticationLogs.AuthenticationLog", b =>

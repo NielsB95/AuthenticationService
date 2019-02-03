@@ -3,15 +3,17 @@ using System;
 using AuthenticationService.DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AuthenticationService.DataLayer.Migrations
 {
     [DbContext(typeof(AuthenticationServiceContext))]
-    partial class AuthenticationServiceContextModelSnapshot : ModelSnapshot
+    [Migration("20190203104556_Fixed foreign keys Application - User")]
+    partial class FixedforeignkeysApplicationUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,9 +33,6 @@ namespace AuthenticationService.DataLayer.Migrations
                         .IsRequired();
 
                     b.HasKey("ID");
-
-                    b.HasIndex("ApplicationCode")
-                        .IsUnique();
 
                     b.ToTable("Applications");
                 });
@@ -58,8 +57,6 @@ namespace AuthenticationService.DataLayer.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<Guid>("ApplicationID");
 
                     b.Property<DateTime>("CreatedAt");
 
@@ -106,7 +103,7 @@ namespace AuthenticationService.DataLayer.Migrations
                     b.HasData(
                         new
                         {
-                            ID = new Guid("d9d77f1a-d803-4d15-bdd6-21d623291ed8"),
+                            ID = new Guid("4d3e46ee-0d75-4d92-9451-bdd67d7e1dfd"),
                             Name = "Super admin"
                         });
                 });

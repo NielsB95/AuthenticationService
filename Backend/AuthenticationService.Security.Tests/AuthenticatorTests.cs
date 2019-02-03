@@ -1,4 +1,5 @@
-﻿using AuthenticationService.BusinessLayer.Entities.AuthenticationLogs;
+﻿using AuthenticationService.BusinessLayer.Entities.Applications;
+using AuthenticationService.BusinessLayer.Entities.AuthenticationLogs;
 using AuthenticationService.BusinessLayer.Entities.Roles;
 using AuthenticationService.BusinessLayer.Entities.Users;
 using AuthenticationService.DataLayer.Context;
@@ -14,190 +15,219 @@ using System.Threading.Tasks;
 
 namespace AuthenticationService.Security.Tests
 {
-    [TestClass]
-    public class AuthenticatorTests
-    {
-        private AuthenticationServiceContext context;
-        private IUserRepository userRepository;
-        private IAuthenticationLogRepository authenticationLogRepository;
-        private PasswordHashing passwordHashing;
-        private TokenGenerator tokenGenerator;
-        private IConfiguration configuration;
+	[TestClass]
+	public class AuthenticatorTests
+	{
+		private AuthenticationServiceContext context;
+		private IUserRepository userRepository;
+		private IAuthenticationLogger logger;
+		private IApplicationUserRepository applicationUserRepository;
+		private IAuthenticationLogRepository authenticationLogRepository;
+		private IApplicationRepository applicationRepository;
+		private PasswordHashing passwordHashing;
+		private TokenGenerator tokenGenerator;
+		private IConfiguration configuration;
 
-        private Authenticator authenticator;
+		private Authenticator authenticator;
 
-        [TestInitialize]
-        public void Initialize()
-        {
-            context = DataLayer.Tests.TestContext.CreateContext();
+		private Guid applicationCode = Guid.NewGuid();
+		private Guid applicationID = Guid.NewGuid();
+		private Guid johnID = Guid.NewGuid();
+		private Guid janeID = Guid.NewGuid();
 
-            var admin = context.Add(new Role()
-            {
-                ID = Guid.NewGuid(),
-                Name = "Admin"
-            }).Entity;
+		[TestInitialize]
+		public void Initialize()
+		{
+			context = DataLayer.Tests.TestContext.CreateContext();
 
-            context.Add(new User()
-            {
-                Username = "john",
-                Lastname = "Joe",
-                Password = "+Y0VT7pj7C7vvMUsmBBaaGHoCvrSrO6hUWglzbec7Ag=",
-                CreatedAt = new DateTime(2018, 12, 22),
-                Role = admin
-            });
-            context.Add(new User()
-            {
-                Username = "Jane",
-                Lastname = "",
-                Password = "pass",
-                CreatedAt = new DateTime(2018, 12, 23),
-                Role = admin
-            });
-            context.SaveChanges();
+			var admin = context.Add(new Role()
+			{
+				ID = Guid.NewGuid(),
+				Name = "Admin"
+			}).Entity;
 
-            userRepository = new UserRepository(context);
-            authenticationLogRepository = new AuthenticationLogRepository(context);
-            passwordHashing = new PasswordHashing();
+			context.Add(new User()
+			{
+				ID = johnID,
+				Username = "john",
+				Lastname = "Joe",
+				Password = "+Y0VT7pj7C7vvMUsmBBaaGHoCvrSrO6hUWglzbec7Ag=",
+				CreatedAt = new DateTime(2018, 12, 22),
+				Role = admin
+			});
+			context.Add(new User()
+			{
+				ID = janeID,
+				Username = "Jane",
+				Lastname = "",
+				Password = "+Y0VT7pj7C7vvMUsmBBaaGHoCvrSrO6hUWglzbec7Ag=",
+				CreatedAt = new DateTime(2018, 12, 23),
+				Role = admin
+			});
 
-            var configMock = new Mock<IConfiguration>();
-            configMock.Setup(x => x["Secret"]).Returns("2OzslhneIrPaTS/T5MY3ZU4oOjE2hYGsNJJ6fuKEKoP/blm9acKUzR/vEAVstkKwetZJzU3OSf2b5zsllxDwyA==");
-            configuration = configMock.Object;
-            tokenGenerator = new TokenGenerator(configuration);
+			context.Add(new Application() { ID = applicationID, Name = "Authentication service", ApplicationCode = applicationCode });
+			context.Add(new ApplicationUser() { ApplicationID = applicationID, UserID = johnID });
 
-            authenticator = new Authenticator(userRepository, authenticationLogRepository, passwordHashing, tokenGenerator);
-        }
+			context.SaveChanges();
 
-        [TestMethod]
-        public async Task AuthenticationTest()
-        {
-            var ipAddress = new IPAddress(0x00000);
-            var result = await authenticator.Authenticate("john", "pass", ipAddress);
+			userRepository = new UserRepository(context);
 
-            Assert.AreNotEqual("", result);
-            Assert.IsNotNull(result);
-        }
+			applicationUserRepository = new ApplicationUserRepository(context);
+			passwordHashing = new PasswordHashing();
+			authenticationLogRepository = new AuthenticationLogRepository(context);
+			applicationRepository = new ApplicationRepository(context);
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public async Task UsernameNullTest()
-        {
-            var ipAddress = new IPAddress(0x00000);
-            var result = await authenticator.Authenticate(null, "pass", ipAddress);
-        }
+			logger = new AuthenticationLogger(authenticationLogRepository, applicationRepository);
 
-        [TestMethod]
-        public async Task UnknownUsernameTest()
-        {
-            var ipAddress = new IPAddress(0x00000);
-            var result = await authenticator.Authenticate("Unknown", "pass", ipAddress);
+			var configMock = new Mock<IConfiguration>();
+			configMock.Setup(x => x["Secret"]).Returns("2OzslhneIrPaTS/T5MY3ZU4oOjE2hYGsNJJ6fuKEKoP/blm9acKUzR/vEAVstkKwetZJzU3OSf2b5zsllxDwyA==");
+			configuration = configMock.Object;
+			tokenGenerator = new TokenGenerator(configuration);
 
-            Assert.AreEqual("", result);
-        }
+			authenticator = new Authenticator(userRepository, applicationUserRepository, logger, passwordHashing, tokenGenerator);
+		}
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public async Task NullPasswordTest()
-        {
-            var ipAddress = new IPAddress(0x00000);
-            var result = await authenticator.Authenticate("john", null, ipAddress);
-        }
+		[TestMethod]
+		public async Task AuthenticationTest()
+		{
+			var ipAddress = new IPAddress(0x00000);
+			var result = await authenticator.Authenticate("john", "pass", applicationCode, ipAddress);
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public async Task NullIPAddressTest()
-        {
-            var ipAddress = new IPAddress(0x00000);
-            var result = await authenticator.Authenticate("john", "pass", null);
-        }
+			Assert.AreNotEqual("", result);
+			Assert.IsNotNull(result);
+		}
 
-        [TestMethod]
-        public async Task AuthenticationLogTest()
-        {
-            var beforeCount = (await authenticationLogRepository.GetAll()).Count;
+		[TestMethod]
+		public async Task ApplicationCodeTest()
+		{
+			var ipAddress = new IPAddress(0x00000);
+			var result = await authenticator.Authenticate("jane", "pass", applicationCode, ipAddress);
 
-            var ipAddress = new IPAddress(0x00000);
-            var result = await authenticator.Authenticate("john", "pass", ipAddress);
+			Assert.AreEqual("", result);
+			Assert.IsNotNull(result);
+		}
 
-            var afterCount = (await authenticationLogRepository.GetAll()).Count;
-            Assert.AreEqual(beforeCount + 1, afterCount);
-        }
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public async Task UsernameNullTest()
+		{
+			var ipAddress = new IPAddress(0x00000);
+			var result = await authenticator.Authenticate(null, "pass", applicationCode, ipAddress);
+		}
 
-        [TestMethod]
-        public async Task AuthenticationLogNotAddedOnFailTest()
-        {
-            var beforeCount = (await authenticationLogRepository.GetAll()).Count;
-            var ipAddress = new IPAddress(0x00000);
-            var result = await authenticator.Authenticate("Unknown", "pass", ipAddress);
+		[TestMethod]
+		public async Task UnknownUsernameTest()
+		{
+			var ipAddress = new IPAddress(0x00000);
+			var result = await authenticator.Authenticate("Unknown", "pass", applicationCode, ipAddress);
 
-            var afterCount = (await authenticationLogRepository.GetAll()).Count;
+			Assert.AreEqual("", result);
+		}
 
-            Assert.AreEqual(beforeCount + 1, afterCount);
-        }
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public async Task NullPasswordTest()
+		{
+			var ipAddress = new IPAddress(0x00000);
+			var result = await authenticator.Authenticate("john", null, applicationCode, ipAddress);
+		}
 
-        [TestMethod]
-        public async Task AuthenticationLogNotAddedOnWrongPassTest()
-        {
-            var beforeCount = (await authenticationLogRepository.GetAll()).Count;
-            var ipAddress = new IPAddress(0x00000);
-            var result = await authenticator.Authenticate("john", "wrongpass", ipAddress);
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public async Task NullIPAddressTest()
+		{
+			var ipAddress = new IPAddress(0x00000);
+			var result = await authenticator.Authenticate("john", "pass", applicationCode, null);
+		}
 
-            var afterCount = (await authenticationLogRepository.GetAll()).Count;
+		[TestMethod]
+		public async Task AuthenticationLogTest()
+		{
+			var beforeCount = (await authenticationLogRepository.GetAll()).Count;
 
-            Assert.AreEqual(beforeCount + 1, afterCount);
-        }
+			var ipAddress = new IPAddress(0x00000);
+			var result = await authenticator.Authenticate("john", "pass", applicationCode, ipAddress);
 
-        [TestMethod]
-        public async Task AuthenticationLogStatusOnWrongPassTest()
-        {
-            var ipAddress = new IPAddress(0x00000);
-            var result = await authenticator.Authenticate("john", "wrongpass", ipAddress);
+			var afterCount = (await authenticationLogRepository.GetAll()).Count;
+			Assert.AreEqual(beforeCount + 1, afterCount);
+		}
 
-            var latestLog = (await authenticationLogRepository.GetAll())
-                            .OrderBy(x => x.CreatedAt)
-                            .First();
+		[TestMethod]
+		public async Task AuthenticationLogNotAddedOnFailTest()
+		{
+			var beforeCount = (await authenticationLogRepository.GetAll()).Count;
+			var ipAddress = new IPAddress(0x00000);
+			var result = await authenticator.Authenticate("Unknown", "pass", applicationCode, ipAddress);
 
-            Assert.IsFalse(latestLog.Successful);
-        }
+			var afterCount = (await authenticationLogRepository.GetAll()).Count;
 
-        [TestMethod]
-        public async Task AuthenticationLogStatusOnUnknownUserTest()
-        {
-            var ipAddress = new IPAddress(0x00000);
-            var result = await authenticator.Authenticate("Unknown", "wrongpass", ipAddress);
+			Assert.AreEqual(beforeCount + 1, afterCount);
+		}
 
-            var latestLog = (await authenticationLogRepository.GetAll())
-                            .OrderBy(x => x.CreatedAt)
-                            .First();
+		[TestMethod]
+		public async Task AuthenticationLogNotAddedOnWrongPassTest()
+		{
+			var beforeCount = (await authenticationLogRepository.GetAll()).Count;
+			var ipAddress = new IPAddress(0x00000);
+			var result = await authenticator.Authenticate("john", "wrongpass", applicationCode, ipAddress);
 
-            Assert.IsFalse(latestLog.Successful);
-        }
+			var afterCount = (await authenticationLogRepository.GetAll()).Count;
 
-        [TestMethod]
-        public async Task AuthenticationLogStatusOnSuccessTest()
-        {
-            var ipAddress = new IPAddress(0x00000);
-            var result = await authenticator.Authenticate("john", "pass", ipAddress);
+			Assert.AreEqual(beforeCount + 1, afterCount);
+		}
 
-            var latestLog = (await authenticationLogRepository.GetAll())
-                            .OrderBy(x => x.CreatedAt)
-                            .First();
+		[TestMethod]
+		public async Task AuthenticationLogStatusOnWrongPassTest()
+		{
+			var ipAddress = new IPAddress(0x00000);
+			var result = await authenticator.Authenticate("john", "wrongpass", applicationCode, ipAddress);
 
-            Assert.IsTrue(latestLog.Successful);
-        }
+			var latestLog = (await authenticationLogRepository.GetAll())
+							.OrderBy(x => x.CreatedAt)
+							.First();
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void GenerateTokenNUllUserTest()
-        {
-            tokenGenerator.GenerateToken(null, null);
-        }
+			Assert.IsFalse(latestLog.Successful);
+		}
 
-        [TestCleanup]
-        public async Task CleanUp()
-        {
-            context.RemoveRange(context.Users);
-            context.RemoveRange(context.AuthenticationLogs);
-            await context.SaveChangesAsync();
-        }
-    }
+		[TestMethod]
+		public async Task AuthenticationLogStatusOnUnknownUserTest()
+		{
+			var ipAddress = new IPAddress(0x00000);
+			var result = await authenticator.Authenticate("Unknown", "wrongpass", applicationCode, ipAddress);
+
+			var latestLog = (await authenticationLogRepository.GetAll())
+							.OrderBy(x => x.CreatedAt)
+							.First();
+
+			Assert.IsFalse(latestLog.Successful);
+		}
+
+		[TestMethod]
+		public async Task AuthenticationLogStatusOnSuccessTest()
+		{
+			var ipAddress = new IPAddress(0x00000);
+			var result = await authenticator.Authenticate("john", "pass", applicationCode, ipAddress);
+
+			var latestLog = (await authenticationLogRepository.GetAll())
+							.OrderBy(x => x.CreatedAt)
+							.First();
+
+			Assert.IsTrue(latestLog.Successful);
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void GenerateTokenNUllUserTest()
+		{
+			tokenGenerator.GenerateToken(null, Guid.Empty, null);
+		}
+
+		[TestCleanup]
+		public async Task CleanUp()
+		{
+			context.RemoveRange(context.Users);
+			context.RemoveRange(context.AuthenticationLogs);
+			await context.SaveChangesAsync();
+		}
+	}
 }

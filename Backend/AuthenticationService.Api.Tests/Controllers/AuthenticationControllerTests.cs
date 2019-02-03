@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using AuthenticationService.Api.Controllers;
 using AuthenticationService.Api.Models;
@@ -12,53 +13,55 @@ using Moq;
 
 namespace AuthenticationService.Api.Tests.Controllers
 {
-    [TestClass]
-    public class AuthenticationControllerTests : ApiTests
-    {
-        private IAuthenticator authenticator;
-        private IIPAddressTools ipAddressTools;
-        private IUserRepository userRepository;
-        private AuthenticationController controller;
+	[TestClass]
+	public class AuthenticationControllerTests : ApiTests
+	{
+		private IAuthenticator authenticator;
+		private IIPAddressTools ipAddressTools;
+		private IUserRepository userRepository;
+		private AuthenticationController controller;
+		private Guid applicationCode = Guid.NewGuid();
 
-        [TestInitialize]
-        public void Initialize()
-        {
-            var ipAddress = IPAddress.Parse("127.0.0.1");
-            var mockAuthenticator = new Mock<IAuthenticator>();
-            mockAuthenticator.Setup(x => x.Authenticate("John", "pass", ipAddress)).ReturnsAsync("VALID_TOKEN");
-            mockAuthenticator.Setup(x => x.Authenticate("Joe", "pass", ipAddress)).ReturnsAsync("");
-            authenticator = mockAuthenticator.Object;
+		[TestInitialize]
+		public void Initialize()
+		{
 
-            var mockIPAddressTools = new Mock<IIPAddressTools>();
-            mockIPAddressTools.Setup(x => x.GetIPAddress(It.IsAny<HttpContext>())).Returns(ipAddress);
-            ipAddressTools = mockIPAddressTools.Object;
+			var ipAddress = IPAddress.Parse("127.0.0.1");
+			var mockAuthenticator = new Mock<IAuthenticator>();
+			mockAuthenticator.Setup(x => x.Authenticate("John", "pass", applicationCode, ipAddress)).ReturnsAsync("VALID_TOKEN");
+			mockAuthenticator.Setup(x => x.Authenticate("Joe", "pass", applicationCode, ipAddress)).ReturnsAsync("");
+			authenticator = mockAuthenticator.Object;
 
-            var mockUserRepository = new Mock<IUserRepository>();
-            mockUserRepository.Setup(x => x.GetByUsername(It.IsAny<string>())).ReturnsAsync(new User() { Firstname = "John" });
-            userRepository = mockUserRepository.Object;
+			var mockIPAddressTools = new Mock<IIPAddressTools>();
+			mockIPAddressTools.Setup(x => x.GetIPAddress(It.IsAny<HttpContext>())).Returns(ipAddress);
+			ipAddressTools = mockIPAddressTools.Object;
 
-            controller = new AuthenticationController(authenticator, ipAddressTools, userRepository);
-        }
+			var mockUserRepository = new Mock<IUserRepository>();
+			mockUserRepository.Setup(x => x.GetByUsername(It.IsAny<string>())).ReturnsAsync(new User() { Firstname = "John" });
+			userRepository = mockUserRepository.Object;
 
-        [TestMethod]
-        public async Task POST_AuthenticateSuccesfullTest()
-        {
-            var response = await controller.Authenticate("John", "pass");
-            var responseResult = response.Result as OkObjectResult;
-            var model = responseResult.Value as AuthenticationModel;
+			controller = new AuthenticationController(authenticator, ipAddressTools, userRepository);
+		}
 
-            Assert.AreEqual(200, responseResult.StatusCode);
-            Assert.AreEqual("VALID_TOKEN", model.Token);
-            Assert.AreEqual("John", model.User.Firstname);
-        }
+		[TestMethod]
+		public async Task POST_AuthenticateSuccesfullTest()
+		{
+			var response = await controller.Authenticate("John", "pass", applicationCode);
+			var responseResult = response.Result as OkObjectResult;
+			var model = responseResult.Value as AuthenticationModel;
 
-        [TestMethod]
-        public async Task POST_AuthenticateUnsuccesfullTest()
-        {
-            var response = await controller.Authenticate("Joe", "pass");
-            var responseResult = response.Result as UnauthorizedResult;
+			Assert.AreEqual(200, responseResult.StatusCode);
+			Assert.AreEqual("VALID_TOKEN", model.Token);
+			Assert.AreEqual("John", model.User.Firstname);
+		}
 
-            Assert.AreEqual(401, responseResult.StatusCode);
-        }
-    }
+		[TestMethod]
+		public async Task POST_AuthenticateUnsuccesfullTest()
+		{
+			var response = await controller.Authenticate("Joe", "pass", applicationCode);
+			var responseResult = response.Result as UnauthorizedResult;
+
+			Assert.AreEqual(401, responseResult.StatusCode);
+		}
+	}
 }
