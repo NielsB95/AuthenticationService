@@ -9,7 +9,7 @@ namespace AuthenticationService.Security
 {
 	public interface IAuthenticator
 	{
-		Task<string> Authenticate(string username, string password, IPAddress ipAddress);
+		Task<string> Authenticate(string username, string password, string applicationcode, IPAddress ipAddress);
 	}
 
 	public class Authenticator : IAuthenticator
@@ -28,7 +28,7 @@ namespace AuthenticationService.Security
 			this.tokenGenerator = tokenGenerator;
 		}
 
-		public async Task<string> Authenticate(string username, string password, IPAddress ipAddress)
+		public async Task<string> Authenticate(string username, string password, string applicationcode, IPAddress ipAddress)
 		{
 			// Get the user that matches the username.
 			var user = await userRepository.GetByUsername(username);

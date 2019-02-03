@@ -38,6 +38,11 @@ namespace AuthenticationService.DataLayer.Context
 			modelBuilder.Entity<ApplicationUser>()
 				.HasKey(p => new { p.ApplicationID, p.UserID });
 
+			// Enforce uniqueness of the ApplicationCode.
+			modelBuilder.Entity<Application>()
+				.HasIndex(p => p.ApplicationCode)
+				.IsUnique();
+
 			#region Many to many (User - ApplicationUser - Application)
 			modelBuilder.Entity<ApplicationUser>()
 				.HasOne(au => au.User)
