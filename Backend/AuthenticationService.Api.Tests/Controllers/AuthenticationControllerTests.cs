@@ -20,7 +20,7 @@ namespace AuthenticationService.Api.Tests.Controllers
 		private IIPAddressTools ipAddressTools;
 		private IUserRepository userRepository;
 		private AuthenticationController controller;
-		private string applicationCode = new Guid().ToString();
+		private Guid applicationCode = Guid.NewGuid();
 
 		[TestInitialize]
 		public void Initialize()

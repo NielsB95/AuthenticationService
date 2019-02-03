@@ -10,7 +10,7 @@ namespace AuthenticationService.Security
 {
 	public interface IAuthenticator
 	{
-		Task<string> Authenticate(string username, string password, string applicationcode, IPAddress ipAddress);
+		Task<string> Authenticate(string username, string password, Guid applicationcode, IPAddress ipAddress);
 	}
 
 	public class Authenticator : IAuthenticator
@@ -30,7 +30,7 @@ namespace AuthenticationService.Security
 			this.tokenGenerator = tokenGenerator;
 		}
 
-		public async Task<string> Authenticate(string username, string password, string applicationCode, IPAddress ipAddress)
+		public async Task<string> Authenticate(string username, string password, Guid applicationCode, IPAddress ipAddress)
 		{
 			// Get the user that matches the username.
 			var user = await userRepository.GetByUsername(username);
@@ -38,35 +38,33 @@ namespace AuthenticationService.Security
 			// There is no one in our database with this username.
 			if (user == null)
 			{
-				await CreateAuthenticationLog(null, false);
+				await CreateAuthenticationLog(null, applicationCode, false);
 				return string.Empty;
 			}
 
 			// Check if the password is correct.
 			var success = passwordHashing.Compare(user, password);
 
-			var parsedApplicationCode = Guid.Parse(applicationCode);
-			if (parsedApplicationCode == Guid.Empty)
-				throw new ArgumentException("Failed to format '{0}' as Guid", applicationCode);
+
 
 			// Check if the user has the rights for this applicaiton.
-			var isApplicationAuthorized = await this.applicationUserRepository.IsAuthorized(user.ID, parsedApplicationCode);
+			var isApplicationAuthorized = await this.applicationUserRepository.IsAuthorized(user.ID, applicationCode);
 
 			// .. also return an empty string if the password didn't match.
 			if (!success || !isApplicationAuthorized)
 			{
-				await CreateAuthenticationLog(user, false);
+				await CreateAuthenticationLog(user, applicationCode, false);
 				return string.Empty;
 			}
 
 			// .. add a new logentiry to the authenticationlog.
-			await CreateAuthenticationLog(user);
+			await CreateAuthenticationLog(user, applicationCode);
 
 			var token = tokenGenerator.GenerateToken(user, applicationCode, ipAddress);
 			return token;
 		}
 
-		private async Task CreateAuthenticationLog(User user, bool succesful = true)
+		private async Task CreateAuthenticationLog(User user, Guid applicationCode, bool succesful = true)
 		{
 			await authenticationLogRepository.Add(new AuthenticationLog()
 			{

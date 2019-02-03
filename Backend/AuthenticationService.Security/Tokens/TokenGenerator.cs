@@ -19,13 +19,10 @@ namespace AuthenticationService.Security.Tokens
 			secret = configuration["Secret"];
 		}
 
-		public string GenerateToken(User user, string applicationCode, IPAddress ipAddress, int expireMinutes = 20)
+		public string GenerateToken(User user, Guid applicationCode, IPAddress ipAddress, int expireMinutes = 20)
 		{
 			if (user == null)
 				throw new ArgumentNullException(nameof(user));
-
-			if (applicationCode == null)
-				throw new ArgumentNullException(nameof(applicationCode));
 
 			if (ipAddress == null)
 				throw new ArgumentNullException(nameof(ipAddress));
@@ -38,7 +35,7 @@ namespace AuthenticationService.Security.Tokens
 				new Claim("UserID", user.ID.ToString()),
 				new Claim("Name", user.Fullname),
 				new Claim("UserIP", ipAddress.ToString()),
-				new Claim("ApplicationCode", applicationCode),
+				new Claim("ApplicationCode", applicationCode.ToString()),
 				new Claim("RoleID", user.Role.ID.ToString())
 			};
 

@@ -28,7 +28,7 @@ namespace AuthenticationService.Security.Tests
 
 		private Authenticator authenticator;
 
-		private string applicationCode = Guid.NewGuid().ToString();
+		private Guid applicationCode = Guid.NewGuid();
 		private Guid applicationID = Guid.NewGuid();
 		private Guid johnID = Guid.NewGuid();
 		private Guid janeID = Guid.NewGuid();
@@ -63,7 +63,7 @@ namespace AuthenticationService.Security.Tests
 				Role = admin
 			});
 
-			context.Add(new Application() { ID = applicationID, Name = "Authentication service", ApplicationCode = Guid.Parse(applicationCode) });
+			context.Add(new Application() { ID = applicationID, Name = "Authentication service", ApplicationCode = applicationCode });
 			context.Add(new ApplicationUser() { ApplicationID = applicationID, UserID = johnID });
 
 			context.SaveChanges();
@@ -213,7 +213,7 @@ namespace AuthenticationService.Security.Tests
 		[ExpectedException(typeof(ArgumentNullException))]
 		public void GenerateTokenNUllUserTest()
 		{
-			tokenGenerator.GenerateToken(null, null, null);
+			tokenGenerator.GenerateToken(null, Guid.Empty, null);
 		}
 
 		[TestCleanup]
