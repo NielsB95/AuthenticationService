@@ -26,7 +26,7 @@ let LogIn = async (username: string, password: string) => {
     })
         .then(response => {
             if (response.status === 401)
-                throw new Error("Un authorized!!");
+                throw new Error("Unauthorized!!");
 
             if (response.status === 500)
                 throw new Error("Something went wrong!");
