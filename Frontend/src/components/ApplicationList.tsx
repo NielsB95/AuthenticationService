@@ -14,7 +14,8 @@ class ApplicationList extends React.Component<IApplicationList> {
         return (
             <MaterialTable
                 columns={[
-                    { title: 'Name', field: 'name' }
+                    { title: 'Name', field: 'name' },
+                    { title: 'Application code', field: 'applicationCode' }
                 ]}
                 data={this.props.applications}
                 title='Applications'

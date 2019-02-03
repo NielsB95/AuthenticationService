@@ -17,6 +17,8 @@ let LogIn = async (username: string, password: string) => {
     let data = new URLSearchParams();
     data.append("username", username);
     data.append("password", password);
+    console.log(Settings.ApplicationCode);
+    data.append("applicationcode", Settings.ApplicationCode);
 
     return fetch(`${Settings.BackendUrl}Authenticate`, {
         method: 'POST',
