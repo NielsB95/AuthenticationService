@@ -46,6 +46,7 @@ namespace AuthenticationService.Security.Tokens
 				IssuedAt = now,
 				Subject = new ClaimsIdentity(claims),
 				Expires = now.AddMinutes(Convert.ToInt32(expireMinutes)),
+				NotBefore = now,
 				SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(symmetricKey), SecurityAlgorithms.HmacSha256Signature)
 			};
 
