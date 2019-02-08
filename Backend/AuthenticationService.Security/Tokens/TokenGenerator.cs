@@ -19,7 +19,7 @@ namespace AuthenticationService.Security.Tokens
 			secret = configuration["Secret"];
 		}
 
-		public string GenerateToken(User user, Guid applicationCode, IPAddress ipAddress, int expireMinutes = 20)
+		public string GenerateToken(User user, Guid applicationCode, IPAddress ipAddress, int expireMinutes = 15)
 		{
 			if (user == null)
 				throw new ArgumentNullException(nameof(user));
