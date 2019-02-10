@@ -186,7 +186,7 @@ class MiniDrawer extends React.Component {
                                 <ListItemIcon>
                                     <SecurityIcon className={classes.centerButton} />
                                 </ListItemIcon>
-                                <ListItemText primary='Roles' className={classes.centerButton} />
+                                <ListItemText primary='Roles' />
                             </ListItem>
                         </Link>
                         <Link to='/Applications'>
@@ -194,7 +194,7 @@ class MiniDrawer extends React.Component {
                                 <ListItemIcon>
                                     <ComputerIcon className={classes.centerButton} />
                                 </ListItemIcon>
-                                <ListItemText primary='Applications' className={classes.centerButton} />
+                                <ListItemText primary='Applications' />
                             </ListItem>
                         </Link>
                     </List>
