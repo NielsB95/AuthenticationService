@@ -87,6 +87,9 @@ const styles = theme => ({
         flexGrow: 1,
         padding: theme.spacing.unit * 3,
     },
+    centerButton: {
+        marginLeft: '8px'
+    }
 });
 
 class MiniDrawer extends React.Component {
@@ -152,9 +155,9 @@ class MiniDrawer extends React.Component {
                     <Divider />
                     <List>
                         <Link to='/Dashboard'>
-                            <ListItem button >
+                            <ListItem button>
                                 <ListItemIcon>
-                                    <DashboardIcon />
+                                    <DashboardIcon className={classes.centerButton} />
                                 </ListItemIcon>
                                 <ListItemText primary='Dashboard' />
                             </ListItem>
@@ -163,7 +166,7 @@ class MiniDrawer extends React.Component {
                         <Link to='/Logs'>
                             <ListItem button >
                                 <ListItemIcon>
-                                    <LibraryBooksIcon />
+                                    <LibraryBooksIcon className={classes.centerButton} />
                                 </ListItemIcon>
                                 <ListItemText primary='Logs' />
                             </ListItem>
@@ -173,7 +176,7 @@ class MiniDrawer extends React.Component {
                         <Link to='/Users'>
                             <ListItem button >
                                 <ListItemIcon>
-                                    <AccessibilityNewIcon />
+                                    <AccessibilityNewIcon className={classes.centerButton} />
                                 </ListItemIcon>
                                 <ListItemText primary='Users' />
                             </ListItem>
@@ -181,24 +184,24 @@ class MiniDrawer extends React.Component {
                         <Link to='/Roles'>
                             <ListItem button >
                                 <ListItemIcon>
-                                    <SecurityIcon />
+                                    <SecurityIcon className={classes.centerButton} />
                                 </ListItemIcon>
-                                <ListItemText primary='Roles' />
+                                <ListItemText primary='Roles' className={classes.centerButton} />
                             </ListItem>
                         </Link>
                         <Link to='/Applications'>
                             <ListItem button >
                                 <ListItemIcon>
-                                    <ComputerIcon />
+                                    <ComputerIcon className={classes.centerButton} />
                                 </ListItemIcon>
-                                <ListItemText primary='Applications' />
+                                <ListItemText primary='Applications' className={classes.centerButton} />
                             </ListItem>
                         </Link>
                     </List>
                     <Divider />
                     <List>
                         <ListItem button onClick={LogOff}>
-                            <ListItemIcon><ExitToApp /></ListItemIcon>
+                            <ListItemIcon><ExitToApp className={classes.centerButton} /></ListItemIcon>
                             <ListItemText primary='Log out' />
                         </ListItem>
                     </List>
