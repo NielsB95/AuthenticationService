@@ -1,21 +1,18 @@
-﻿
-
-using AuthenticationService.BusinessLayer.Entities.Users;
+﻿using AuthenticationService.BusinessLayer.Entities.Users;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
-using System.Security.Cryptography;
 
 namespace AuthenticationService.Security.Tokens
 {
-	public class TokenGenerator
+	public class SymmetricTokenGenerator : ITokenGenerator
 	{
 		private readonly string secret;
 
-		public TokenGenerator(IConfiguration configuration)
+		public SymmetricTokenGenerator(IConfiguration configuration)
 		{
 			secret = configuration["Secret"];
 		}

@@ -25,7 +25,7 @@ namespace AuthenticationService.Security.Tests
 		private IAuthenticationLogRepository authenticationLogRepository;
 		private IApplicationRepository applicationRepository;
 		private PasswordHashing passwordHashing;
-		private TokenGenerator tokenGenerator;
+		private SymmetricTokenGenerator tokenGenerator;
 		private IConfiguration configuration;
 
 		private Authenticator authenticator;
@@ -82,7 +82,7 @@ namespace AuthenticationService.Security.Tests
 			var configMock = new Mock<IConfiguration>();
 			configMock.Setup(x => x["Secret"]).Returns("2OzslhneIrPaTS/T5MY3ZU4oOjE2hYGsNJJ6fuKEKoP/blm9acKUzR/vEAVstkKwetZJzU3OSf2b5zsllxDwyA==");
 			configuration = configMock.Object;
-			tokenGenerator = new TokenGenerator(configuration);
+			tokenGenerator = new SymmetricTokenGenerator(configuration);
 
 			authenticator = new Authenticator(userRepository, applicationUserRepository, logger, passwordHashing, tokenGenerator);
 		}

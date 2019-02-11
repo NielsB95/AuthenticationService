@@ -18,10 +18,10 @@ namespace AuthenticationService.Security
 		private readonly IUserRepository userRepository;
 		private readonly IApplicationUserRepository applicationUserRepository;
 		private readonly IAuthenticationLogger logger;
+		private readonly ITokenGenerator tokenGenerator;
 		private readonly PasswordHashing passwordHashing;
-		private readonly TokenGenerator tokenGenerator;
 
-		public Authenticator(IUserRepository userRepository, IApplicationUserRepository applicationUserRepository, IAuthenticationLogger logger, PasswordHashing passwordHashing, TokenGenerator tokenGenerator)
+		public Authenticator(IUserRepository userRepository, IApplicationUserRepository applicationUserRepository, IAuthenticationLogger logger, PasswordHashing passwordHashing, ITokenGenerator tokenGenerator)
 		{
 			this.userRepository = userRepository;
 			this.applicationUserRepository = applicationUserRepository;

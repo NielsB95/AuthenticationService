@@ -15,7 +15,7 @@ namespace AuthenticationService.Security
 			services.AddScoped<IAuthenticator, Authenticator>();
 			services.AddScoped<IAuthenticationLogger, AuthenticationLogger>();
 			services.AddScoped<PasswordHashing>();
-			services.AddScoped<TokenGenerator>();
+			services.AddScoped<ITokenGenerator, SymmetricTokenGenerator>();
 
 			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 				.AddJwtBearer(options =>
