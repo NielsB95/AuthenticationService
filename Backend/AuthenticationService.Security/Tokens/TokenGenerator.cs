@@ -13,13 +13,11 @@ namespace AuthenticationService.Security.Tokens
 {
 	public class TokenGenerator
 	{
-		private readonly string publicKey;
-		private readonly string privateKey;
+		private readonly string secret;
 
 		public TokenGenerator(IConfiguration configuration)
 		{
-			publicKey = configuration["Keys:Public"];
-			privateKey = configuration["Secret:Private"];
+			secret = configuration["Secret"];
 		}
 
 		public string GenerateToken(User user, Guid applicationCode, IPAddress ipAddress, int expireMinutes = 20)
@@ -51,7 +49,7 @@ namespace AuthenticationService.Security.Tokens
 				Subject = new ClaimsIdentity(claims),
 				Expires = now.AddMinutes(Convert.ToInt32(expireMinutes)),
 				NotBefore = now,
-				SigningCredentials = new SigningCredentials(new AsymmetricSecurityKey(symmetricKey), SecurityAlgorithms.RsaSha512)
+				SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(symmetricKey), SecurityAlgorithms.HmacSha256)
 			};
 
 			var securityToken = tokenHandler.CreateToken(tokenDescriptor);
