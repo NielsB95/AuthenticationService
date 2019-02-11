@@ -13,10 +13,13 @@ namespace AuthenticationService.Security.Tokens
 {
 	public class TokenGenerator
 	{
-		private readonly string secret;
+		private readonly string publicKey;
+		private readonly string privateKey;
+
 		public TokenGenerator(IConfiguration configuration)
 		{
-			secret = configuration["Secret"];
+			publicKey = configuration["Keys:Public"];
+			privateKey = configuration["Secret:Private"];
 		}
 
 		public string GenerateToken(User user, Guid applicationCode, IPAddress ipAddress, int expireMinutes = 20)
@@ -27,9 +30,10 @@ namespace AuthenticationService.Security.Tokens
 			if (ipAddress == null)
 				throw new ArgumentNullException(nameof(ipAddress));
 
-			var key = Convert.ToBase64String(new HMACSHA256().Key);
+			//var key = Convert.ToBase64String(new HMACSHA256().Key);
 			var symmetricKey = Convert.FromBase64String(secret);
 			var tokenHandler = new JwtSecurityTokenHandler();
+
 
 			var claims = new[] {
 				new Claim("UserID", user.ID.ToString()),
@@ -47,7 +51,7 @@ namespace AuthenticationService.Security.Tokens
 				Subject = new ClaimsIdentity(claims),
 				Expires = now.AddMinutes(Convert.ToInt32(expireMinutes)),
 				NotBefore = now,
-				SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(symmetricKey), SecurityAlgorithms.HmacSha256Signature)
+				SigningCredentials = new SigningCredentials(new AsymmetricSecurityKey(symmetricKey), SecurityAlgorithms.RsaSha512)
 			};
 
 			var securityToken = tokenHandler.CreateToken(tokenDescriptor);

@@ -22,10 +22,16 @@ namespace AuthenticationService.Security
 				{
 					options.TokenValidationParameters = new TokenValidationParameters
 					{
-						ValidateIssuer = true,
+						RequireExpirationTime = true,
 						ValidateLifetime = true,
-						ValidateAudience = false,
+
+
+						ValidateIssuer = true,
 						ValidIssuer = "Authentication.Service",
+
+						ValidateAudience = false,
+
+						RequireSignedTokens = true,
 						IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(configuration["Secret"]))
 					};
 				});
