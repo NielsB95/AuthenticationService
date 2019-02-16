@@ -15,3 +15,7 @@ The frontend of this authentication service provides the administartors of an ap
 Example usage
 ------------
 ![Authentication service](https://drive.google.com/uc?export=view&id=1Cr9uoS7glH_Zll-iH7NjO6lgzRxnOU1a)
+
+Code analysis
+-------------
+[![](https://codescene.io/projects/4174/status.svg) Get more details at **codescene.io**.](https://codescene.io/projects/4174/jobs/latest-successful/results)
